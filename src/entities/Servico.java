@@ -3,12 +3,13 @@ package entities;
 public class Servico {
     private String cliente;
     private String modelo;
+    private Double precoModelo;
     private Double precoConserto;
 
-    public Servico(String cliente, String modelo, Double precoConserto) {
+    public Servico(String cliente, String modelo, Double precoModelo) {
         this.cliente = cliente;
         this.modelo = modelo;
-        this.precoConserto = precoConserto;
+        this.precoModelo = precoModelo;
     }
 
     public String getCliente() {
@@ -25,6 +26,14 @@ public class Servico {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public Double getPrecoModelo() {
+        return precoModelo;
+    }
+
+    public void setPrecoModelo(Double precoModelo) {
+        this.precoModelo = precoModelo;
     }
 
     public Double getPrecoConserto() {
