@@ -31,9 +31,17 @@ public class Gerenciador {
     }
 
     public void listarTodos() {
-        for (Servico s : this.servicos) {
-            System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n", s.getCliente(), s.getModelo(), s.getPrecoConserto());
+        if (servicos.isEmpty()) {
+            System.out.println("Não existe nenhum serviço aqui!");
+            return;
         }
+
+        this.servicos.stream()
+                .sorted((s1, s2) -> s1.getCliente().compareToIgnoreCase(s2.getCliente()))
+                .forEach(s -> {
+                    System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
+                            s.getCliente(), s.getModelo(), s.getPrecoConserto());
+                });
     }
 
     public void lucroTotal() {
