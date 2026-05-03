@@ -26,23 +26,14 @@ public class Main {
             sc.nextLine();
 
             if (opcao == 1) {
-                System.out.println("Qual nome do cliente?");
-                String cliente = sc.nextLine();
-                System.out.println("Qual nome do modelo?");
-                String modelo = sc.nextLine();
-                System.out.println("Qual o preço do modelo?");
-                Double precoModelo = sc.nextDouble();
-                sc.nextLine();
-                Servico s = new Servico(cliente, modelo, precoModelo);
+                Servico s = gerenciador.gerenciarServico(sc);
                 gerenciador.addServico(s);
             }
             if (opcao == 2) {
                 gerenciador.listarTodos();
             }
             if (opcao == 3) {
-                System.out.println("Digite o nome do cliente a ser removido:");
-                String removido = sc.nextLine();
-                gerenciador.removerServico(removido);
+                gerenciador.removerServico(sc);
             }
             if (opcao == 4) {
                 gerenciador.lucroTotal();
