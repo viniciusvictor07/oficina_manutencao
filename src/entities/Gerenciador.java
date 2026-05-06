@@ -46,7 +46,7 @@ public class Gerenciador {
         }
     }
 
-    public void listarTodos() {
+    public void listarClientes() {
         if (servicos.isEmpty()) {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
@@ -58,6 +58,10 @@ public class Gerenciador {
                     System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
                             s.getCliente(), s.getModelo(), s.getPrecoConserto());
                 });
+    }
+
+    public void listarPrecos(Scanner sc) {
+
     }
 
     public void lucroTotal() {
