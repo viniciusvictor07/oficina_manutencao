@@ -17,7 +17,7 @@ public class Menu {
         System.out.println("2. Listar Serviços");
         System.out.println("3. Remover Serviço");
         System.out.println("4. Lucro Total");
-        System.out.println("5. Listar Preços");
+        System.out.println("5. Listar Serviços mais caros");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -54,6 +54,9 @@ public class Menu {
 
             case 4:
                 gerenciador.lucroTotal();
+                break;
+            case 5:
+                gerenciador.listarServicoCaro();
                 break;
 
             default:

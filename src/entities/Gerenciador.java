@@ -60,8 +60,17 @@ public class Gerenciador {
                 });
     }
 
-    public void listarPrecos(Scanner sc) {
-
+    public void listarServicoCaro() {
+        if (servicos.isEmpty()) {
+            System.out.println("Não existe nenhum serviço aqui!");
+            return;
+        }
+        this.servicos.stream()
+                .filter(s -> s.getPrecoConserto() > 200)
+                .forEach(s -> {
+                    System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
+                            s.getCliente(), s.getModelo(), s.getPrecoConserto());
+                });
     }
 
     public void lucroTotal() {
