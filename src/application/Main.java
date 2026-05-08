@@ -2,8 +2,6 @@ package application;
 
 import entities.Gerenciador;
 import entities.Menu;
-import entities.Servico;
-
 
 import java.util.Locale;
 import java.util.Scanner;
