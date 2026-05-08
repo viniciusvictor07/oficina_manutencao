@@ -45,7 +45,7 @@ public class Menu {
                 break;
 
             case 2:
-                gerenciador.listarClientes();
+                gerenciador.listarServicos();
                 break;
 
             case 3:

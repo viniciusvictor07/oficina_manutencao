@@ -1,5 +1,7 @@
 package entities;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,13 +15,20 @@ public class Gerenciador {
 
     public Servico gerenciarServico(Scanner sc) {
         System.out.println("Qual nome do cliente?");
-        String cliente = sc.nextLine();
+        String nome = sc.nextLine();
+        System.out.println("Qual email do cliente?");
+        String email = sc.nextLine();
+        System.out.println("Qual o telefone do cliente?");
+        String telefone = sc.nextLine();
+        Cliente cliente = new Cliente(nome, telefone, email);
+
         System.out.println("Qual nome do modelo?");
         String modelo = sc.nextLine();
         System.out.println("Qual o preço do modelo?");
         Double precoModelo = sc.nextDouble();
         sc.nextLine();
-        return new Servico(cliente, modelo, precoModelo);
+        LocalDateTime dataEntrada = LocalDateTime.now();
+        return new Servico(cliente, modelo, precoModelo, dataEntrada);
     }
 
     public void addServico(Servico servicoAdicionado) {
@@ -38,7 +47,7 @@ public class Gerenciador {
         System.out.println("Digite o nome do cliente a ser removido:");
         String servicoRemovido = sc.nextLine();
 
-        boolean conseguiuRemover = servicos.removeIf(s -> s.getCliente().equalsIgnoreCase(servicoRemovido));
+        boolean conseguiuRemover = servicos.removeIf(s -> s.getCliente().getNome().equalsIgnoreCase(servicoRemovido));
         if (conseguiuRemover) {
             System.out.println("Serviço removido com sucesso!");
         } else {
@@ -46,17 +55,22 @@ public class Gerenciador {
         }
     }
 
-    public void listarClientes() {
+    public void listarServicos() {
         if (servicos.isEmpty()) {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
 
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
         this.servicos.stream()
-                .sorted((s1, s2) -> s1.getCliente().compareToIgnoreCase(s2.getCliente()))
+                .sorted((s1, s2) -> s1.getCliente().getNome().compareToIgnoreCase(s2.getCliente().getNome()))
                 .forEach(s -> {
-                    System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
-                            s.getCliente(), s.getModelo(), s.getPrecoConserto());
+                    System.out.printf("Hora do serviço: %s | Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
+                            s.getData().format(fmt),
+                            s.getCliente().getNome(),
+                            s.getModelo(),
+                            s.getPrecoConserto());
                 });
     }
 
@@ -69,7 +83,9 @@ public class Gerenciador {
                 .filter(s -> s.getPrecoConserto() > 200)
                 .forEach(s -> {
                     System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
-                            s.getCliente(), s.getModelo(), s.getPrecoConserto());
+                            s.getCliente().getNome(),
+                            s.getModelo(),
+                            s.getPrecoConserto());
                 });
     }
 
