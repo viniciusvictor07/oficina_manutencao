@@ -93,11 +93,14 @@ public class Gerenciador {
             return;
         }
 
-        double lucro = 0;
+        double valorTotalServico = 0;
+        double valorTotalConserto = 0;
         for (Servico s : this.servicos) {
-            lucro += s.getPrecoConserto() - s.getPrecoModelo();
+            valorTotalServico += s.getPrecoModelo();
+            valorTotalConserto += s.getPrecoConserto();
         }
-        System.out.printf("Lucro total: R$ %.2f%n", lucro);
+        double lucro = valorTotalConserto - valorTotalServico;
+        System.out.printf("Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n", valorTotalServico, valorTotalConserto, lucro);
     }
 }
 
