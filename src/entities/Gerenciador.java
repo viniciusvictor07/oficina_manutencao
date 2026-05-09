@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Gerenciador {
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private List<Servico> servicos;
 
     public Gerenciador() {
@@ -61,11 +62,7 @@ public class Gerenciador {
             return;
         }
 
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-
-        this.servicos.stream()
-                .sorted((s1, s2) -> s1.getCliente().getNome().compareToIgnoreCase(s2.getCliente().getNome()))
-                .forEach(s -> {
+        this.servicos.forEach(s -> {
                     System.out.printf("Hora do serviço: %s | Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
                             s.getData().format(fmt),
                             s.getCliente().getNome(),
@@ -80,9 +77,10 @@ public class Gerenciador {
             return;
         }
         this.servicos.stream()
-                .filter(s -> s.getPrecoConserto() > 200)
+                .filter(s -> s.getPrecoConserto() > 500)
                 .forEach(s -> {
-                    System.out.printf("Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
+                    System.out.printf("Hora do serviço: %s | Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
+                            s.getData().format(fmt),
                             s.getCliente().getNome(),
                             s.getModelo(),
                             s.getPrecoConserto());
