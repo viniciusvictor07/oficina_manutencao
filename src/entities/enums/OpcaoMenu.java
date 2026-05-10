@@ -1,4 +1,4 @@
-package entities;
+package entities.enums;
 
 public enum OpcaoMenu {
     SAIR(0),

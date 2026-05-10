@@ -1,5 +1,7 @@
 package entities;
 
+import entities.enums.OpcaoMenu;
+
 import java.util.Scanner;
 
 public class Menu {
