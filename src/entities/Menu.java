@@ -1,19 +1,18 @@
 package entities;
 
-import entities.enums.OpcaoMenu;
-
+import entities.enums.MenuOption;
 import java.util.Scanner;
 
 public class Menu {
     private Scanner sc;
-    private Gerenciador gerenciador;
+    private ServiceManager serviceManager;
 
-    public Menu(Gerenciador gerenciador, Scanner sc) {
-        this.gerenciador = gerenciador;
+    public Menu(ServiceManager serviceManager, Scanner sc) {
+        this.serviceManager = serviceManager;
         this.sc = sc;
     }
 
-    public void exibirMenu() {
+    public void displayMenu() {
         System.out.println("\n--- MENU OFICINA ---");
         System.out.println("1. Cadastrar Serviço");
         System.out.println("2. Listar Serviços mais caros");
@@ -24,47 +23,47 @@ public class Menu {
         System.out.print("Escolha uma opção: ");
     }
 
-    public void processar() {
+    public void process() {
         while (true) {
-            exibirMenu();
-            int opcaoDigitada = sc.nextInt();
+            displayMenu();
+            int typedOption = sc.nextInt();
             sc.nextLine();
 
-            OpcaoMenu opcaoSelecionada = OpcaoMenu.buscarporCodigo(opcaoDigitada);
-            if (opcaoSelecionada == null) {
+            MenuOption selectedOption = MenuOption.searchByCode(typedOption);
+            if (selectedOption == null) {
                 System.out.println("Opção inválida! Tente novamente.");
                 continue;
             }
-            if (opcaoSelecionada == OpcaoMenu.SAIR) {
+            if (selectedOption == MenuOption.EXIT) {
                 System.out.println("Saindo...");
                 break;
             } else {
-                gerenciarServico(opcaoSelecionada);
+                handleService(selectedOption);
             }
         }
     }
 
-    public void gerenciarServico(OpcaoMenu opcaoSelecionada) {
-        switch (opcaoSelecionada) {
-            case CADASTRAR:
-                Servico s = gerenciador.gerenciarServico(sc);
-                gerenciador.addServico(s);
+    public void handleService(MenuOption selectedOption) {
+        switch (selectedOption) {
+            case REGISTER:
+                ServiceOrder s = serviceManager.generateService(sc);
+                serviceManager.addService(s);
                 break;
 
-            case MAIS_CAROS:
-                gerenciador.listarServicoCaro();
+            case EXPENSIVE:
+                serviceManager.listExpensiveServices();
                 break;
 
-            case LISTAR:
-                gerenciador.listarServicos();
+            case LIST:
+                serviceManager.listServices();
                 break;
 
-            case REMOVER:
-                gerenciador.removerServico(sc);
+            case REMOVE:
+                serviceManager.removeService(sc);
                 break;
 
-            case LUCRO:
-                gerenciador.lucroTotal();
+            case PROFIT:
+                serviceManager.calculateTotalProfit();
                 break;
 
             default:
