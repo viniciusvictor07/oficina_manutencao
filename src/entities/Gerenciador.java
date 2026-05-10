@@ -63,12 +63,12 @@ public class Gerenciador {
         }
 
         this.servicos.forEach(s -> {
-                    System.out.printf("Hora do serviço: %s | Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
-                            s.getData().format(fmt),
-                            s.getCliente().getNome(),
-                            s.getModelo(),
-                            s.getPrecoConserto());
-                });
+            System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
+                    s.getData().format(fmt),
+                    s.getCliente().getNome(),
+                    s.getModelo(),
+                    s.getPrecoConserto());
+        });
     }
 
     public void listarServicoCaro() {
@@ -79,7 +79,7 @@ public class Gerenciador {
         this.servicos.stream()
                 .filter(s -> s.getPrecoConserto() > 500)
                 .forEach(s -> {
-                    System.out.printf("Hora do serviço: %s | Nome do cliente: %s | Nome do modelo: %s | Preço do conserto: R$ %.2f%n",
+                    System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
                             s.getData().format(fmt),
                             s.getCliente().getNome(),
                             s.getModelo(),

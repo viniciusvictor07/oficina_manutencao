@@ -25,37 +25,42 @@ public class Menu {
     public void processar() {
         while (true) {
             exibirMenu();
-            int opcao = sc.nextInt();
+            int opcaoDigitada = sc.nextInt();
             sc.nextLine();
 
-            if (opcao == 0) {
+            OpcaoMenu opcaoSelecionada = OpcaoMenu.buscarporCodigo(opcaoDigitada);
+            if (opcaoSelecionada == null) {
+                System.out.println("Opção inválida! Tente novamente.");
+                continue;
+            }
+            if (opcaoSelecionada == OpcaoMenu.SAIR) {
                 System.out.println("Saindo...");
                 break;
             } else {
-                gerenciarServico(opcao);
+                gerenciarServico(opcaoSelecionada);
             }
         }
     }
 
-    public void gerenciarServico(int opcao) {
-        switch (opcao) {
-            case 1:
+    public void gerenciarServico(OpcaoMenu opcaoSelecionada) {
+        switch (opcaoSelecionada) {
+            case CADASTRAR:
                 Servico s = gerenciador.gerenciarServico(sc);
                 gerenciador.addServico(s);
                 break;
 
-            case 2:
+            case LISTAR:
                 gerenciador.listarServicos();
                 break;
 
-            case 3:
+            case REMOVER:
                 gerenciador.removerServico(sc);
                 break;
 
-            case 4:
+            case LUCRO:
                 gerenciador.lucroTotal();
                 break;
-            case 5:
+            case MAIS_CAROS:
                 gerenciador.listarServicoCaro();
                 break;
 
