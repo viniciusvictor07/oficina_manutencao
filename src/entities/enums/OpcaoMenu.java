@@ -3,10 +3,10 @@ package entities.enums;
 public enum OpcaoMenu {
     SAIR(0),
     CADASTRAR(1),
-    LISTAR(2),
-    REMOVER(3),
-    LUCRO(4),
-    MAIS_CAROS(5);
+    MAIS_CAROS(2),
+    LISTAR(3),
+    REMOVER(4),
+    LUCRO(5);
 
     private final int codigo;
 

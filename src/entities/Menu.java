@@ -16,10 +16,10 @@ public class Menu {
     public void exibirMenu() {
         System.out.println("\n--- MENU OFICINA ---");
         System.out.println("1. Cadastrar Serviço");
-        System.out.println("2. Listar Serviços");
-        System.out.println("3. Remover Serviço");
-        System.out.println("4. Lucro Total");
-        System.out.println("5. Listar Serviços mais caros");
+        System.out.println("2. Listar Serviços mais caros");
+        System.out.println("3. Listar Serviços");
+        System.out.println("4. Remover Serviço");
+        System.out.println("5. Lucro Total");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -51,6 +51,10 @@ public class Menu {
                 gerenciador.addServico(s);
                 break;
 
+            case MAIS_CAROS:
+                gerenciador.listarServicoCaro();
+                break;
+
             case LISTAR:
                 gerenciador.listarServicos();
                 break;
@@ -61,9 +65,6 @@ public class Menu {
 
             case LUCRO:
                 gerenciador.lucroTotal();
-                break;
-            case MAIS_CAROS:
-                gerenciador.listarServicoCaro();
                 break;
 
             default:
