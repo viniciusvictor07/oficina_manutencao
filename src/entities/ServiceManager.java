@@ -15,27 +15,13 @@ public class ServiceManager {
     }
 
     public ServiceOrder generateService(Scanner sc) {
-        System.out.println("Qual nome do cliente?");
-        String name = sc.nextLine();
-        System.out.println("Qual email do cliente?");
-        String email = sc.nextLine();
-        System.out.println("Qual o telefone do cliente?");
-        String phone = sc.nextLine();
-        Customer customer = new Customer(name, phone, email);
-
-        System.out.println("Qual nome do modelo?");
-        String model = sc.nextLine();
-        System.out.println("Qual o preço do modelo?");
-        Double modelPrice = sc.nextDouble();
-        sc.nextLine();
-
+        Customer customer = Customer.createCostumer(sc);
         LocalDateTime entryDate = LocalDateTime.now();
-        return new ServiceOrder(customer, model, modelPrice, entryDate);
+        Double repairPrice = customer.getModelPrice() * 1.1;
+        return new ServiceOrder(customer, entryDate, repairPrice);
     }
 
     public void addService(ServiceOrder serviceOrderToAdd) {
-        double repairPrice = serviceOrderToAdd.getModelPrice() * 1.1;
-        serviceOrderToAdd.setRepairPrice(repairPrice);
         this.serviceOrders.add(serviceOrderToAdd);
         System.out.println("Serviço registrado com sucesso!");
     }
@@ -45,12 +31,10 @@ public class ServiceManager {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
-
         System.out.println("Digite o nome do cliente a ser removido:");
         String targetName = sc.nextLine();
 
         boolean removed = serviceOrders.removeIf(s -> s.getCustomer().getName().equalsIgnoreCase(targetName));
-
         if (removed) {
             System.out.println("Serviço removido com sucesso!");
         } else {
@@ -63,12 +47,11 @@ public class ServiceManager {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
-
         this.serviceOrders.forEach(s -> {
             System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
                     s.getEntryDate().format(fmt),
                     s.getCustomer().getName(),
-                    s.getModel(),
+                    s.getCustomer().getModel(),
                     s.getRepairPrice());
         });
     }
@@ -84,7 +67,7 @@ public class ServiceManager {
                     System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
                             s.getEntryDate().format(fmt),
                             s.getCustomer().getName(),
-                            s.getModel(),
+                            s.getCustomer().getModel(),
                             s.getRepairPrice());
                 });
     }
@@ -98,7 +81,7 @@ public class ServiceManager {
         double totalModelValue = 0;
         double totalRepairValue = 0;
         for (ServiceOrder s : this.serviceOrders) {
-            totalModelValue += s.getModelPrice();
+            totalModelValue += s.getCustomer().getModelPrice();
             totalRepairValue += s.getRepairPrice();
         }
         double profit = totalRepairValue - totalModelValue;

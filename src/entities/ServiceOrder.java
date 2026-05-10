@@ -4,16 +4,13 @@ import java.time.LocalDateTime;
 
 public class ServiceOrder {
     private Customer customer;
-    private String model;
-    private Double modelPrice;
-    private Double repairPrice;
     private LocalDateTime entryDate;
+    private Double repairPrice;
 
-    public ServiceOrder(Customer customer, String model, Double modelPrice, LocalDateTime entryDate) {
+    public ServiceOrder(Customer customer, LocalDateTime entryDate, Double repairPrice) {
         this.customer = customer;
-        this.model = model;
-        this.modelPrice = modelPrice;
         this.entryDate = entryDate;
+        this.repairPrice = repairPrice;
     }
 
     public Customer getCustomer() {
@@ -22,22 +19,6 @@ public class ServiceOrder {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public Double getModelPrice() {
-        return modelPrice;
-    }
-
-    public void setModelPrice(Double modelPrice) {
-        this.modelPrice = modelPrice;
     }
 
     public Double getRepairPrice() {

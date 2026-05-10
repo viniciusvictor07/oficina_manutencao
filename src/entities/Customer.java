@@ -1,14 +1,28 @@
 package entities;
 
+import java.util.Scanner;
+
 public class Customer {
     private String name;
-    private String phone;
-    private String email;
+    private String model;
+    private Double modelPrice;
 
-    public Customer(String name, String phone, String email) {
+    public Customer(String name, String model, Double modelPrice) {
         this.name = name;
-        this.phone = phone;
-        this.email = email;
+        this.model = model;
+        this.modelPrice = modelPrice;
+    }
+
+    public static Customer createCostumer(Scanner sc) {
+        System.out.println("Qual nome do cliente?");
+        String name = sc.nextLine();
+        System.out.println("Qual nome do modelo?");
+        String model = sc.nextLine();
+        System.out.println("Qual o preço do modelo?");
+        Double modelPrice = sc.nextDouble();
+        sc.nextLine();
+
+        return new Customer(name, model, modelPrice);
     }
 
     public String getName() {
@@ -19,19 +33,19 @@ public class Customer {
         this.name = name;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getModel() {
+        return model;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public String getEmail() {
-        return email;
+    public Double getModelPrice() {
+        return modelPrice;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setModelPrice(Double modelPrice) {
+        this.modelPrice = modelPrice;
     }
 }

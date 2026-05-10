@@ -1,13 +1,14 @@
 package entities;
 
 import entities.enums.MenuOption;
+
 import java.util.Scanner;
 
-public class Menu {
+public class ConsoleUI {
     private Scanner sc;
     private ServiceManager serviceManager;
 
-    public Menu(ServiceManager serviceManager, Scanner sc) {
+    public ConsoleUI(ServiceManager serviceManager, Scanner sc) {
         this.serviceManager = serviceManager;
         this.sc = sc;
     }
@@ -46,8 +47,8 @@ public class Menu {
     public void handleService(MenuOption selectedOption) {
         switch (selectedOption) {
             case REGISTER:
-                ServiceOrder s = serviceManager.generateService(sc);
-                serviceManager.addService(s);
+                ServiceOrder generatedService = serviceManager.generateService(sc);
+                serviceManager.addService(generatedService);
                 break;
 
             case EXPENSIVE:
