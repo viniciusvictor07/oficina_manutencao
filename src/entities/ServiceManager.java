@@ -15,7 +15,7 @@ public class ServiceManager {
     }
 
     public ServiceOrder generateService(Scanner sc) {
-        Customer customer = Customer.createCostumer(sc);
+        Customer customer = Customer.createCustomer(sc);
         LocalDateTime entryDate = LocalDateTime.now();
         Double repairPrice = customer.getModelPrice() * 1.1;
         return new ServiceOrder(customer, entryDate, repairPrice);
@@ -77,7 +77,6 @@ public class ServiceManager {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
-
         double totalModelValue = 0;
         double totalRepairValue = 0;
         for (ServiceOrder s : this.serviceOrders) {

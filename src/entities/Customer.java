@@ -13,7 +13,7 @@ public class Customer {
         this.modelPrice = modelPrice;
     }
 
-    public static Customer createCostumer(Scanner sc) {
+    public static Customer createCustomer(Scanner sc) {
         System.out.println("Qual nome do cliente?");
         String name = sc.nextLine();
         System.out.println("Qual nome do modelo?");
