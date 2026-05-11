@@ -7,10 +7,10 @@ public class ServiceOrder {
     private LocalDateTime entryDate;
     private Double repairPrice;
 
-    public ServiceOrder(Customer customer, LocalDateTime entryDate, Double repairPrice) {
+    public ServiceOrder(Customer customer, LocalDateTime entryDate) {
         this.customer = customer;
         this.entryDate = entryDate;
-        this.repairPrice = repairPrice;
+        this.repairPrice = customer.getModelPrice() * 1.1;
     }
 
     public Customer getCustomer() {

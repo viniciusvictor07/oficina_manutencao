@@ -3,9 +3,12 @@ package entities;
 import entities.enums.MenuOption;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleUI {
+    private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
     private final Scanner sc;
     private final ServiceManager serviceManager;
 
@@ -36,8 +39,7 @@ public class ConsoleUI {
         Customer customer = new Customer(name, model, modelPrice);
 
         LocalDateTime entryDate = LocalDateTime.now();
-        Double repairPrice = customer.getModelPrice() * 1.1;
-        return new ServiceOrder(customer, entryDate, repairPrice);
+        return new ServiceOrder(customer, entryDate);
     }
 
     private void removeServiceOrder() {
@@ -53,6 +55,45 @@ public class ConsoleUI {
         } else {
             System.out.println("Não foi possível remover o serviço.");
         }
+    }
+
+    public List<ServiceOrder> getAvailableServices() {
+        if (!serviceManager.hasServices()) {
+            return null;
+        }
+        return serviceManager.getAllServices();
+    }
+
+    public void listAllServices() {
+        List<ServiceOrder> serviceOrderList = getAvailableServices();
+        if (serviceOrderList == null) {
+            System.out.println("Não existe nenhum serviço aqui!");
+            return;
+        }
+        serviceOrderList.forEach(s -> {
+            System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
+                    s.getEntryDate().format(fmt),
+                    s.getCustomer().getName(),
+                    s.getCustomer().getModel(),
+                    s.getRepairPrice());
+        });
+    }
+
+    public void listExpensiveServices() {
+        List<ServiceOrder> serviceOrderList = getAvailableServices();
+        if (serviceOrderList == null) {
+            System.out.println("Não existe nenhum serviço aqui!");
+            return;
+        }
+        serviceOrderList.stream()
+                .filter(s -> s.getRepairPrice() > 500)
+                .forEach(s -> {
+                    System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
+                            s.getEntryDate().format(fmt),
+                            s.getCustomer().getName(),
+                            s.getCustomer().getModel(),
+                            s.getRepairPrice());
+                });
     }
 
     public void process() {
@@ -83,11 +124,11 @@ public class ConsoleUI {
                 break;
 
             case EXPENSIVE:
-                serviceManager.listExpensiveServices();
+                listExpensiveServices();
                 break;
 
             case LIST:
-                serviceManager.listServices();
+                listAllServices();
                 break;
 
             case REMOVE:
