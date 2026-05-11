@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.Scanner;
-
 public class Customer {
     private String name;
     private String model;
@@ -11,18 +9,6 @@ public class Customer {
         this.name = name;
         this.model = model;
         this.modelPrice = modelPrice;
-    }
-
-    public static Customer createCustomer(Scanner sc) {
-        System.out.println("Qual nome do cliente?");
-        String name = sc.nextLine();
-        System.out.println("Qual nome do modelo?");
-        String model = sc.nextLine();
-        System.out.println("Qual o preço do modelo?");
-        Double modelPrice = sc.nextDouble();
-        sc.nextLine();
-
-        return new Customer(name, model, modelPrice);
     }
 
     public String getName() {

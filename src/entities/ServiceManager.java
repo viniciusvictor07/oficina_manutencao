@@ -1,10 +1,8 @@
 package entities;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ServiceManager {
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -14,32 +12,17 @@ public class ServiceManager {
         this.serviceOrders = new ArrayList<>();
     }
 
-    public ServiceOrder generateService(Scanner sc) {
-        Customer customer = Customer.createCustomer(sc);
-        LocalDateTime entryDate = LocalDateTime.now();
-        Double repairPrice = customer.getModelPrice() * 1.1;
-        return new ServiceOrder(customer, entryDate, repairPrice);
-    }
-
     public void addService(ServiceOrder serviceOrderToAdd) {
         this.serviceOrders.add(serviceOrderToAdd);
         System.out.println("Serviço registrado com sucesso!");
     }
 
-    public void removeService(Scanner sc) {
-        if (this.serviceOrders.isEmpty()) {
-            System.out.println("Não existe nenhum serviço aqui!");
-            return;
-        }
-        System.out.println("Digite o nome do cliente a ser removido:");
-        String targetName = sc.nextLine();
+    public boolean hasServices() {
+        return !this.serviceOrders.isEmpty();
+    }
 
-        boolean removed = serviceOrders.removeIf(s -> s.getCustomer().getName().equalsIgnoreCase(targetName));
-        if (removed) {
-            System.out.println("Serviço removido com sucesso!");
-        } else {
-            System.out.println("Não foi possível remover o serviço.");
-        }
+    public boolean removeService(String targetName) {
+        return serviceOrders.removeIf(s -> s.getCustomer().getName().equalsIgnoreCase(targetName));
     }
 
     public void listServices() {
@@ -77,8 +60,8 @@ public class ServiceManager {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
-        double totalModelValue = 0;
-        double totalRepairValue = 0;
+        double totalModelValue = 0.0;
+        double totalRepairValue = 0.0;
         for (ServiceOrder s : this.serviceOrders) {
             totalModelValue += s.getCustomer().getModelPrice();
             totalRepairValue += s.getRepairPrice();
