@@ -40,8 +40,8 @@ public class ConsoleUI {
     public void handleService(MenuOption selectedOption) {
         switch (selectedOption) {
             case REGISTER -> {
-                ServiceOrder generatedService = inputServiceOrder();
-                serviceManager.addService(generatedService);
+                ServiceOrder pendingService = inputServiceOrder();
+                addServiceOrder(pendingService);
             }
             case EXPENSIVE -> listExpensiveServices();
             case LIST -> listAllServices();
@@ -91,6 +91,14 @@ public class ConsoleUI {
         Customer customer = new Customer(name, model, modelPrice);
 
         return new ServiceOrder(customer, LocalDateTime.now());
+    }
+
+    private void addServiceOrder(ServiceOrder pendingService) {
+        if (serviceManager.addService(pendingService)) {
+            System.out.println("Serviço registrado com sucesso!");
+        } else {
+            System.out.println("Erro ao registrar serviço.");
+        }
     }
 
     private void removeServiceOrder() {
