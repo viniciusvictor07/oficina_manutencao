@@ -10,9 +10,8 @@ public class ServiceManager {
         this.serviceOrders = new ArrayList<>();
     }
 
-    public void addService(ServiceOrder serviceOrderToAdd) {
-        this.serviceOrders.add(serviceOrderToAdd);
-        System.out.println("Serviço registrado com sucesso!");
+    public boolean addService(ServiceOrder serviceOrderToAdd) {
+        return this.serviceOrders.add(serviceOrderToAdd);
     }
 
     public boolean removeService(String targetName) {
@@ -27,19 +26,19 @@ public class ServiceManager {
         return this.serviceOrders;
     }
 
-    public void calculateTotalProfit() {
-        if (serviceOrders.isEmpty()) {
-            System.out.println("Não existe nenhum serviço aqui!");
-            return;
-        }
+    public double getTotalModelPrices() {
         double totalModelValue = 0.0;
-        double totalRepairValue = 0.0;
         for (ServiceOrder s : this.serviceOrders) {
             totalModelValue += s.getCustomer().getModelPrice();
+        }
+        return totalModelValue;
+    }
+
+    public double getTotalRepairPrices() {
+        double totalRepairValue = 0.0;
+        for (ServiceOrder s : this.serviceOrders) {
             totalRepairValue += s.getRepairPrice();
         }
-        double profit = totalRepairValue - totalModelValue;
-        System.out.printf("Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
-                totalModelValue, totalRepairValue, profit);
+        return totalRepairValue;
     }
 }
