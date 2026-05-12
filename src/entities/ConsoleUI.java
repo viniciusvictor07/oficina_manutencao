@@ -73,11 +73,11 @@ public class ConsoleUI {
 
     public void showTotalProfit() {
         double totalModelsPrice = serviceManager.getTotalModelPrices();
-        double totalRepairPrice = serviceManager.getTotalRepairPrices();
-        double totalProfit = totalRepairPrice - totalModelsPrice;
+        double totalRepairsPrice = serviceManager.getTotalRepairPrices();
+        double totalProfit = totalRepairsPrice - totalModelsPrice;
 
         System.out.printf("Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
-                totalModelValue, totalRepairValue, profit);
+                totalModelsPrice, totalRepairsPrice, totalProfit);
     }
 
     private ServiceOrder inputServiceOrder() {
