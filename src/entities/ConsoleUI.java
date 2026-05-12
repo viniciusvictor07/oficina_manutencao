@@ -44,10 +44,10 @@ public class ConsoleUI {
                 serviceManager.addService(generatedService);
             }
             case EXPENSIVE -> listExpensiveServices();
-            case LIST      -> listAllServices();
-            case REMOVE    -> removeServiceOrder();
-            case PROFIT    -> serviceManager.calculateTotalProfit();
-            default        -> System.out.println("Opção inválida! Tente novamente.");
+            case LIST -> listAllServices();
+            case REMOVE -> removeServiceOrder();
+            case PROFIT -> showTotalProfit();
+            default -> System.out.println("Opção inválida! Tente novamente.");
         }
     }
 
@@ -69,6 +69,15 @@ public class ConsoleUI {
         serviceOrderList.stream()
                 .filter(s -> s.getRepairPrice() > 500)
                 .forEach(this::printService);
+    }
+
+    public void showTotalProfit() {
+        double totalModelsPrice = serviceManager.getTotalModelPrices();
+        double totalRepairPrice = serviceManager.getTotalRepairPrices();
+        double totalProfit = totalRepairPrice - totalModelsPrice;
+
+        System.out.printf("Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
+                totalModelValue, totalRepairValue, profit);
     }
 
     private ServiceOrder inputServiceOrder() {
