@@ -90,11 +90,27 @@ public class ConsoleUI {
         int typedVehicleOption = sc.nextInt();
         sc.nextLine();
 
+        String modelType;
+        LocalDateTime now = LocalDateTime.now();
         VehicleOption selectedVehicleOption = VehicleOption.searchByCode(typedVehicleOption);
+
         if (selectedVehicleOption == null) {
             System.out.println("Opção inválida! Tente novamente.");
             return null;
         }
+        switch (selectedVehicleOption) {
+            case CAR -> {
+                modelType = "Carro";
+            }
+            case MOTORCYCLE -> {
+                modelType = "Motocicleta";
+            }
+            default -> {
+                System.out.println("Opção inválida! Tente novamente.");
+                return null;
+            }
+        }
+
         System.out.println("Qual nome do cliente?");
         String name = sc.nextLine();
 
@@ -102,22 +118,14 @@ public class ConsoleUI {
         Double modelPrice = sc.nextDouble();
         sc.nextLine();
 
+        Customer customer = new Customer(name, modelType, modelPrice);
+        ServiceOrder pendingService = null;
+
         switch (selectedVehicleOption) {
-            case CAR -> {
-                String modelType = "Carro";
-                Customer customer = new Customer(name, modelType, modelPrice);
-                return new CarService(customer, LocalDateTime.now());
-            }
-            case MOTORCYCLE -> {
-                String modelType = "Motocicleta";
-                Customer customer = new Customer(name, modelType, modelPrice);
-                return new MotoService(customer, LocalDateTime.now());
-            }
-            default -> {
-                System.out.println("Opção inválida! Tente novamente.");
-                return null;
-            }
+            case CAR -> pendingService = new CarService(customer, now);
+            case MOTORCYCLE -> pendingService = new MotoService(customer, now);
         }
+        return pendingService;
     }
 
     private void addServiceOrder(ServiceOrder pendingService) {
