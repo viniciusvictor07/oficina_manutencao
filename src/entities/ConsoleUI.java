@@ -1,6 +1,7 @@
 package entities;
 
 import entities.enums.MenuOption;
+import entities.enums.VehicleOption;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,7 +42,9 @@ public class ConsoleUI {
         switch (selectedOption) {
             case REGISTER -> {
                 ServiceOrder pendingService = inputServiceOrder();
-                addServiceOrder(pendingService);
+                if (pendingService != null) {
+                    addServiceOrder(pendingService);
+                }
             }
             case EXPENSIVE -> listExpensiveServices();
             case LIST -> listAllServices();
@@ -81,16 +84,40 @@ public class ConsoleUI {
     }
 
     private ServiceOrder inputServiceOrder() {
+        System.out.println("Qual o tipo do veículo?");
+        System.out.println("1 - Carro");
+        System.out.println("2 - Moto");
+        int typedVehicleOption = sc.nextInt();
+        sc.nextLine();
+
+        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(typedVehicleOption);
+        if (selectedVehicleOption == null) {
+            System.out.println("Opção inválida! Tente novamente.");
+            return null;
+        }
         System.out.println("Qual nome do cliente?");
         String name = sc.nextLine();
-        System.out.println("Qual nome do modelo?");
-        String model = sc.nextLine();
-        System.out.println("Qual o preço do modelo?");
+
+        System.out.println("Qual o preço do veículo?");
         Double modelPrice = sc.nextDouble();
         sc.nextLine();
-        Customer customer = new Customer(name, model, modelPrice);
 
-        return new ServiceOrder(customer, LocalDateTime.now());
+        switch (selectedVehicleOption) {
+            case CAR -> {
+                String modelType = "Carro";
+                Customer customer = new Customer(name, modelType, modelPrice);
+                return new CarService(customer, LocalDateTime.now());
+            }
+            case MOTORCYCLE -> {
+                String modelType = "Motocicleta";
+                Customer customer = new Customer(name, modelType, modelPrice);
+                return new MotoService(customer, LocalDateTime.now());
+            }
+            default -> {
+                System.out.println("Opção inválida! Tente novamente.");
+                return null;
+            }
+        }
     }
 
     private void addServiceOrder(ServiceOrder pendingService) {
@@ -135,7 +162,7 @@ public class ConsoleUI {
     }
 
     private void printService(ServiceOrder s) {
-        System.out.printf("Horário: %s | Cliente: %s | Modelo: %s | Conserto: R$ %.2f%n",
+        System.out.printf("Horário: %s | Cliente: %s | Veículo: %s | Conserto: R$ %.2f%n",
                 s.getEntryDate().format(fmt),
                 s.getCustomer().getName(),
                 s.getCustomer().getModel(),
