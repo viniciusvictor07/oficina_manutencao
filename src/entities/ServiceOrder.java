@@ -3,15 +3,16 @@ package entities;
 import java.time.LocalDateTime;
 
 public class ServiceOrder {
-    private Customer customer;
-    private LocalDateTime entryDate;
-    private Double repairPrice;
+    protected Customer customer;
+    protected LocalDateTime entryDate;
+    protected Double repairPrice;
 
     public ServiceOrder(Customer customer, LocalDateTime entryDate) {
         this.customer = customer;
         this.entryDate = entryDate;
-        this.repairPrice = customer.getModelPrice() * 1.1;
+        this.repairPrice = getRepairPrice();
     }
+
 
     public Customer getCustomer() {
         return customer;
@@ -22,7 +23,7 @@ public class ServiceOrder {
     }
 
     public Double getRepairPrice() {
-        return repairPrice;
+        return this.repairPrice = customer.getModelPrice() * 1.1;
     }
 
     public void setRepairPrice(Double repairPrice) {
