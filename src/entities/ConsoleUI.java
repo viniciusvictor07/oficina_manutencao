@@ -1,9 +1,7 @@
 package entities;
 
 import entities.enums.MenuOption;
-import entities.enums.VehicleOption;
 
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
@@ -40,120 +38,123 @@ public class ConsoleUI {
 
     public void handleService(MenuOption selectedOption) {
         switch (selectedOption) {
-            case REGISTER -> {
-                ServiceOrder pendingService = inputServiceOrder();
-                if (pendingService != null) {
-                    addServiceOrder(pendingService);
-                }
+            case REGISTER_CUSTOMER -> {
+                Customer pendingCustomer = inputCustomer();
+                addCustomerToList(pendingCustomer);
             }
-            case EXPENSIVE -> listExpensiveServices();
-            case LIST -> listAllServices();
-            case REMOVE -> removeServiceOrder();
-            case PROFIT -> showTotalProfit();
+//            case EXPENSIVE -> listExpensiveServices();
+//            case LIST -> listAllServices();
+//            case REMOVE -> removeServiceOrder();
+//            case PROFIT -> showTotalProfit();
             default -> System.out.println("Opção inválida! Tente novamente.");
         }
     }
 
-    public void listAllServices() {
-        List<ServiceOrder> serviceOrderList = getAvailableServices();
-        if (serviceOrderList == null) {
-            System.out.println("Não existe nenhum serviço aqui!");
-            return;
-        }
-        serviceOrderList.forEach(this::printService);
-    }
-
-    public void listExpensiveServices() {
-        List<ServiceOrder> serviceOrderList = getAvailableServices();
-        if (serviceOrderList == null) {
-            System.out.println("Não existe nenhum serviço aqui!");
-            return;
-        }
-        serviceOrderList.stream()
-                .filter(s -> s.getRepairPrice() > 500)
-                .forEach(this::printService);
-    }
-
-    public void showTotalProfit() {
-        double totalModelsPrice = serviceManager.getTotalModelPrices();
-        double totalRepairsPrice = serviceManager.getTotalRepairPrices();
-        double totalProfit = totalRepairsPrice - totalModelsPrice;
-
-        System.out.printf("Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
-                totalModelsPrice, totalRepairsPrice, totalProfit);
-    }
-
-    private ServiceOrder inputServiceOrder() {
-        System.out.println("Qual o tipo do veículo?");
-        System.out.println("1 - Carro");
-        System.out.println("2 - Moto");
-        int typedVehicleOption = sc.nextInt();
-        sc.nextLine();
-
-        String modelType;
-        LocalDateTime now = LocalDateTime.now();
-        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(typedVehicleOption);
-
-        if (selectedVehicleOption == null) {
-            System.out.println("Opção inválida! Tente novamente.");
-            return null;
-        }
-        switch (selectedVehicleOption) {
-            case CAR -> {
-                modelType = "Carro";
-            }
-            case MOTORCYCLE -> {
-                modelType = "Motocicleta";
-            }
-            default -> {
-                System.out.println("Opção inválida! Tente novamente.");
-                return null;
-            }
-        }
-
-        System.out.println("Qual nome do cliente?");
-        String name = sc.nextLine();
-
-        System.out.println("Qual o preço do veículo?");
-        Double modelPrice = sc.nextDouble();
-        sc.nextLine();
-
-        Customer customer = new Customer(name, modelType, modelPrice);
-        ServiceOrder pendingService = null;
-
-        switch (selectedVehicleOption) {
-            case CAR -> pendingService = new CarService(customer, now);
-            case MOTORCYCLE -> pendingService = new MotoService(customer, now);
-        }
-        return pendingService;
-    }
-
-    private void addServiceOrder(ServiceOrder pendingService) {
-        if (serviceManager.addService(pendingService)) {
-            System.out.println("Serviço registrado com sucesso!");
+    private void addCustomerToList(Customer pendingCustomer) {
+        if (serviceManager.addCustomer(pendingCustomer)) {
+            System.out.println("Cliente registrado com sucesso!");
         } else {
             System.out.println("Erro ao registrar serviço.");
         }
     }
 
-    private void removeServiceOrder() {
-        if (getAvailableServices() == null) {
-            System.out.println("Não existe nenhum serviço aqui!");
-            return;
-        }
-        System.out.println("Digite o nome do cliente a ser removido:");
-        String targetName = sc.nextLine();
+//    public void listAllServices() {
+//        List<ServiceOrder> serviceOrderList = getAvailableServices();
+//        if (serviceOrderList == null) {
+//            System.out.println("Não existe nenhum serviço aqui!");
+//            return;
+//        }
+//        serviceOrderList.forEach(this::printService);
+//    }
 
-        if (serviceManager.removeService(targetName)) {
-            System.out.println("Serviço removido com sucesso!");
-        } else {
-            System.out.println("Não foi possível remover o serviço.");
-        }
+//    public void listExpensiveServices() {
+//        List<ServiceOrder> serviceOrderList = getAvailableServices();
+//        if (serviceOrderList == null) {
+//            System.out.println("Não existe nenhum serviço aqui!");
+//            return;
+//        }
+//        serviceOrderList.stream()
+//                .filter(s -> s.getRepairPrice() > 500)
+//                .forEach(this::printService);
+//    }
+
+//    public void showTotalProfit() {
+//        double totalModelsPrice = serviceManager.getTotalModelPrices();
+//        double totalRepairsPrice = serviceManager.getTotalRepairPrices();
+//        double totalProfit = totalRepairsPrice - totalModelsPrice;
+//
+//        System.out.printf("Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
+//                totalModelsPrice, totalRepairsPrice, totalProfit);
+//    }
+
+    private Customer inputCustomer() {
+        System.out.println("Qual nome do cliente?");
+        String name = sc.nextLine();
+        return new Customer(name);
     }
+
+
+//    private ServiceOrder inputServiceOrder() {
+//        System.out.println("Qual o tipo do veículo?");
+//        System.out.println("1 - Carro");
+//        System.out.println("2 - Moto");
+//        int typedVehicleOption = sc.nextInt();
+//        sc.nextLine();
+//
+//        String modelType;
+//        LocalDateTime now = LocalDateTime.now();
+//        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(typedVehicleOption);
+//
+//        if (selectedVehicleOption == null) {
+//            System.out.println("Opção inválida! Tente novamente.");
+//            return null;
+//        }
+//        switch (selectedVehicleOption) {
+//            case CAR -> {
+//                modelType = "Carro";
+//            }
+//            case MOTORCYCLE -> {
+//                modelType = "Motocicleta";
+//            }
+//            default -> {
+//                System.out.println("Opção inválida! Tente novamente.");
+//                return null;
+//            }
+//        }
+//
+//
+//        System.out.println("Qual o preço do veículo?");
+//        Double modelPrice = sc.nextDouble();
+//        sc.nextLine();
+//
+//
+//        ServiceOrder pendingService = null;
+//
+//        switch (selectedVehicleOption) {
+//            case CAR -> pendingService = new CarService(LocalDateTime , String vehicleModel, Double baseValue, Customer customer);
+//            case MOTORCYCLE -> pendingService = new MotoService(LocalDateTime entryDate, String vehicleModel, Double baseValue, Customer customer);
+//        }
+//        return pendingService;
+//    }
+
+//    private void removeServiceOrder() {
+//        if (getAvailableServices() == null) {
+//            System.out.println("Não existe nenhum serviço aqui!");
+//            return;
+//        }
+//        System.out.println("Digite o nome do cliente a ser removido:");
+//        String targetName = sc.nextLine();
+//
+//        if (serviceManager.removeCustomer(targetName)) {
+//            System.out.println("Serviço removido com sucesso!");
+//        } else {
+//            System.out.println("Não foi possível remover o serviço.");
+//        }
+//    }
 
     public void displayMenu() {
         System.out.println("\n--- MENU OFICINA ---");
-        System.out.println("1. Cadastrar Serviço");
+        System.out.println("1. Cadastrar Cliente");
         System.out.println("2. Listar Serviços mais caros");
         System.out.println("3. Listar Serviços");
         System.out.println("4. Remover Serviço");
@@ -162,18 +163,18 @@ public class ConsoleUI {
         System.out.print("Escolha uma opção: ");
     }
 
-    private List<ServiceOrder> getAvailableServices() {
-        if (!serviceManager.hasServices()) {
-            return null;
-        }
-        return serviceManager.getAllServices();
-    }
+//    private List<ServiceOrder> getAvailableServices() {
+//        if (!serviceManager.hasServices()) {
+//            return null;
+//        }
+//        return serviceManager.getAllServices();
+//    }
 
-    private void printService(ServiceOrder s) {
-        System.out.printf("Horário: %s | Cliente: %s | Veículo: %s | Conserto: R$ %.2f%n",
-                s.getEntryDate().format(fmt),
-                s.getCustomer().getName(),
-                s.getCustomer().getModel(),
-                s.getRepairPrice());
-    }
+//    private void printService(ServiceOrder s) {
+//        System.out.printf("Horário: %s | Cliente: %s | Veículo: %s | Conserto: R$ %.2f%n",
+//                s.getEntryDate().format(fmt),
+//                s.getCustomer().getName(),
+//                s.getCustomer().getModel(),
+//                s.getRepairPrice());
+//    }
 }
