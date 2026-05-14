@@ -2,35 +2,16 @@ package entities;
 
 import java.time.LocalDateTime;
 
-public class ServiceOrder {
-    protected Customer customer;
+public abstract class ServiceOrder {
     protected LocalDateTime entryDate;
-    protected Double repairPrice;
+    protected String vehicleModel;
+    protected Double baseValue;
 
-    public ServiceOrder(Customer customer, LocalDateTime entryDate) {
-        this.customer = customer;
+    public ServiceOrder(LocalDateTime entryDate, String vehicleModel, Double baseValue) {
         this.entryDate = entryDate;
-        this.repairPrice = getRepairPrice();
+        this.vehicleModel = vehicleModel;
+        this.baseValue = baseValue;
     }
 
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
-    public Double getRepairPrice() {
-        return this.repairPrice = customer.getModelPrice() * 1.1;
-    }
-
-    public void setRepairPrice(Double repairPrice) {
-        this.repairPrice = repairPrice;
-    }
-
-    public LocalDateTime getEntryDate() {
-        return entryDate;
-    }
+    public abstract Double getRepairPrice();
 }
