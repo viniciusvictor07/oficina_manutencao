@@ -1,10 +1,12 @@
 package entities;
 
 import entities.enums.MenuOption;
+import entities.enums.VehicleOption;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class ConsoleUI {
     private static final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -42,6 +44,24 @@ public class ConsoleUI {
                 Customer pendingCustomer = inputCustomer();
                 addCustomerToList(pendingCustomer);
             }
+            case REGISTER_SERVICE -> {
+                Customer selectedCustomer = selectCustomer();
+                if (selectedCustomer == null) {
+                    return;
+                }
+
+                ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
+                addServiceToCustomer(pendingService, selectedCustomer);
+            }
+//            case REMOVE_CUSTOMER -> {
+//                String targetName = inputCustomerName();
+//                removeCustomerFromList(targetName);
+//            }
+//            case REMOVE_SERVICE -> {
+//                String targetName = inputCustomerName();
+//                removeServiceFromList(targetName);
+//        }
+
 //            case EXPENSIVE -> listExpensiveServices();
 //            case LIST -> listAllServices();
 //            case REMOVE -> removeServiceOrder();
@@ -57,6 +77,15 @@ public class ConsoleUI {
             System.out.println("Erro ao registrar serviço.");
         }
     }
+
+    private void addServiceToCustomer(ServiceOrder pendingService, Customer selectedCustomer) {
+        if (pendingService != null && selectedCustomer.addServiceOrder(pendingService)) {
+            System.out.println("Serviço registrado com sucesso!");
+        } else {
+            System.out.println("Erro ao registrar serviço.");
+        }
+    }
+
 
 //    public void listAllServices() {
 //        List<ServiceOrder> serviceOrderList = getAvailableServices();
@@ -93,49 +122,29 @@ public class ConsoleUI {
         return new Customer(name);
     }
 
+    private ServiceOrder inputServiceOrder(Customer selectedCustomer) {
+        System.out.println("Qual o tipo do veículo?");
+        System.out.println("1 - Carro");
+        System.out.println("2 - Moto");;
+        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(sc.nextInt());
+        sc.nextLine();
 
-//    private ServiceOrder inputServiceOrder() {
-//        System.out.println("Qual o tipo do veículo?");
-//        System.out.println("1 - Carro");
-//        System.out.println("2 - Moto");
-//        int typedVehicleOption = sc.nextInt();
-//        sc.nextLine();
-//
-//        String modelType;
-//        LocalDateTime now = LocalDateTime.now();
-//        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(typedVehicleOption);
-//
-//        if (selectedVehicleOption == null) {
-//            System.out.println("Opção inválida! Tente novamente.");
-//            return null;
-//        }
-//        switch (selectedVehicleOption) {
-//            case CAR -> {
-//                modelType = "Carro";
-//            }
-//            case MOTORCYCLE -> {
-//                modelType = "Motocicleta";
-//            }
-//            default -> {
-//                System.out.println("Opção inválida! Tente novamente.");
-//                return null;
-//            }
-//        }
-//
-//
-//        System.out.println("Qual o preço do veículo?");
-//        Double modelPrice = sc.nextDouble();
-//        sc.nextLine();
-//
-//
-//        ServiceOrder pendingService = null;
-//
-//        switch (selectedVehicleOption) {
-//            case CAR -> pendingService = new CarService(LocalDateTime , String vehicleModel, Double baseValue, Customer customer);
-//            case MOTORCYCLE -> pendingService = new MotoService(LocalDateTime entryDate, String vehicleModel, Double baseValue, Customer customer);
-//        }
-//        return pendingService;
-//    }
+        if (selectedVehicleOption == null) {
+            System.out.println("Opção inválida! Tente novamente.");
+            return null;
+        }
+
+        System.out.println("Qual o modelo do veículo?");
+        String vehicleModel = sc.nextLine();
+        System.out.println("Qual o preço da mão de obra?");
+        Double baseValue = sc.nextDouble();
+        sc.nextLine();
+
+        return switch (selectedVehicleOption) {
+            case CAR -> new CarService(vehicleModel, baseValue, selectedCustomer);
+            case MOTORCYCLE -> new MotoService(vehicleModel, baseValue, selectedCustomer);
+        };
+    }
 
 //    private void removeServiceOrder() {
 //        if (getAvailableServices() == null) {
@@ -155,22 +164,58 @@ public class ConsoleUI {
     public void displayMenu() {
         System.out.println("\n--- MENU OFICINA ---");
         System.out.println("1. Cadastrar Cliente");
-        System.out.println("2. Listar Serviços mais caros");
-        System.out.println("3. Listar Serviços");
-        System.out.println("4. Remover Serviço");
-        System.out.println("5. Lucro Total");
+        System.out.println("2. Cadastrar Serviço");
+        System.out.println("3. Listar Serviços mais caros");
+        System.out.println("4. Listar Serviços");
+        System.out.println("5. Remover Cliente");
+        System.out.println("6. Remover Serviço");
+        System.out.println("7. Lucro Total");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
 
+    private List<Customer> getAvailableCustomers() {
+        if (!serviceManager.hasCustomers()) {
+            return null;
+        }
+        return serviceManager.getAllCostumers();
+    }
+
 //    private List<ServiceOrder> getAvailableServices() {
-//        if (!serviceManager.hasServices()) {
+//
+//        if (!customer.hasServices()) {
 //            return null;
 //        }
-//        return serviceManager.getAllServices();
+//        return customer.getServiceOrders();
 //    }
 
-//    private void printService(ServiceOrder s) {
+    private Customer selectCustomer() {
+        List<Customer> customers = serviceManager.getAllCostumers();
+
+        if (customers.isEmpty()) {
+            System.out.println("Nenhum cliente cadastrado no sistema.");
+            return null;
+        }
+
+        System.out.println("--- Selecione o Cliente ---");
+        for (int i = 0; i < customers.size(); i++) {
+            System.out.printf("%d. %s%n", i + 1, customers.get(i).getCustomerName());
+        }
+
+        System.out.print("Digite o número do cliente: ");
+        int index = sc.nextInt() - 1;
+        sc.nextLine();
+
+        if (index >= 0 && index < customers.size()) {
+            return customers.get(index);
+        } else {
+            System.out.println("Índice inválido!");
+            return null;
+        }
+    }
+
+
+//    private void showServices(ServiceOrder s) {
 //        System.out.printf("Horário: %s | Cliente: %s | Veículo: %s | Conserto: R$ %.2f%n",
 //                s.getEntryDate().format(fmt),
 //                s.getCustomer().getName(),

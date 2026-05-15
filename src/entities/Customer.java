@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private String customerName;
+    private final String customerName;
     private final List<ServiceOrder> serviceOrders;
 
     public Customer(String customerName) {
@@ -12,8 +12,17 @@ public class Customer {
         this.serviceOrders = new ArrayList<>();
     }
 
-    public void addServiceOrder(ServiceOrder pendingServiceOrder) {
-        this.serviceOrders.add(pendingServiceOrder);
+    public boolean addServiceOrder(ServiceOrder pendingServiceOrder) {
+        return this.serviceOrders.add(pendingServiceOrder);
+    }
+
+    // TODO: implementar removeService
+//    public boolean removeService(String targetName) {
+//        return allCustomers.removeIf(c -> c.getCustomerName().equalsIgnoreCase(targetName));
+//    }
+
+    public boolean hasServices() {
+        return !this.serviceOrders.isEmpty();
     }
 
     public double getTotalSpent() {
@@ -31,9 +40,10 @@ public class Customer {
     public String getCustomerName() {
         return customerName;
     }
+// TODO: implementar opção de alterar nome do cliente
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+//    public void setCustomerName(String customerName) {
+//        this.customerName = customerName;
+//    }
 }
 

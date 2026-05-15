@@ -2,11 +2,13 @@ package entities.enums;
 
 public enum MenuOption {
     EXIT(0),
-    REGISTER(1),
-    EXPENSIVE(2),
-    LIST(3),
-    REMOVE(4),
-    PROFIT(5);
+    REGISTER_CUSTOMER(1),
+    REGISTER_SERVICE(2),
+    EXPENSIVE(3),
+    LIST(4),
+    REMOVE_CUSTOMER(5),
+    REMOVE_SERVICE(6),
+    PROFIT(7);
 
     private final int code;
 
