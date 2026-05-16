@@ -68,14 +68,15 @@ public class ConsoleUI {
                 addServiceToCustomer(pendingService, selectedCustomer);
             }
 
-//            case REMOVE_CUSTOMER -> {
-//                String targetName = inputCustomerName();
-//                removeCustomerFromList(targetName);
-//            }
+            case REMOVE_CUSTOMER -> {
+                Customer selectedCustomer = selectCustomer();
+                if (selectedCustomer == null) {
+                    return;
+                }
+                removeCustomerFromList(selectedCustomer);
+            }
 //
 //            case REMOVE_SERVICE -> {
-//                String targetName = inputCustomerName();
-//                removeServiceFromList(targetName);
 //            }
 //
             case LIST_SERVICES -> listAllServices();
@@ -157,6 +158,14 @@ public class ConsoleUI {
             System.out.println("Serviço registrado com sucesso!");
         } else {
             System.out.println("Erro ao registrar serviço.");
+        }
+    }
+
+    private void removeCustomerFromList(Customer selectedCustomer) {
+        if (serviceManager.removeCustomer(selectedCustomer)) {
+            System.out.println("Clente removido com sucesso!");
+        } else {
+            System.out.println("Falha ao remover cliente.");
         }
     }
 

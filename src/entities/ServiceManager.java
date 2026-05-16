@@ -14,8 +14,8 @@ public class ServiceManager {
         return this.allCustomers.add(pendingCustomer);
     }
 
-    public boolean removeCustomer(String targetName) {
-        return allCustomers.removeIf(c -> c.getCustomerName().equalsIgnoreCase(targetName));
+    public boolean removeCustomer(Customer selectedCustomer) {
+        return allCustomers.removeIf(c -> c == selectedCustomer);
     }
 
     public boolean hasCustomers() {
