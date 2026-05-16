@@ -28,8 +28,4 @@ public abstract class ServiceOrder {
     public Double getBaseValue() {
         return baseValue;
     }
-
-    public Customer getCustomer() {
-        return customer;
-    }
 }
