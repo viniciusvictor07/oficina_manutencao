@@ -1,4 +1,4 @@
-package entities;
+package model.entities;
 
 public class CarService extends ServiceOrder {
     public CarService(String vehicleModel, Double baseValue, Customer customer) {

@@ -1,4 +1,4 @@
-package entities.enums;
+package model.entities.enums;
 
 public enum MenuOption {
     EXIT(0),

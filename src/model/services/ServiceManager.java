@@ -1,4 +1,7 @@
-package entities;
+package model.services;
+
+import model.entities.Customer;
+import model.entities.ServiceOrder;
 
 import java.util.ArrayList;
 import java.util.List;

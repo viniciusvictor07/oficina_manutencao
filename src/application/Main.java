@@ -1,7 +1,7 @@
 package application;
 
-import entities.ServiceManager;
-import entities.ConsoleUI;
+import model.services.ServiceManager;
+import model.entities.ConsoleUI;
 
 import java.util.Locale;
 import java.util.Scanner;
