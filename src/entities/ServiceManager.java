@@ -18,8 +18,30 @@ public class ServiceManager {
         return allCustomers.removeIf(c -> c == selectedCustomer);
     }
 
-    public boolean hasCustomers() {
-        return !this.allCustomers.isEmpty();
+    public double getTotalBaseValue() {
+        double baseValues = 0.0;
+        List<Customer> customers = getAllCostumers();
+
+        for (Customer c : customers) {
+            for (ServiceOrder s : c.getServiceOrders()) {
+                baseValues += s.getBaseValue();
+            }
+
+        }
+
+        return baseValues;
+    }
+
+    public double getTotalRepairValue() {
+        double repairValues = 0.0;
+        List<Customer> customers = getAllCostumers();
+
+        for (Customer c : customers) {
+            for (ServiceOrder s : c.getServiceOrders()) {
+                repairValues += s.getRepairPrice();
+            }
+        }
+        return repairValues;
     }
 
     public List<Customer> getAllCostumers() {
