@@ -1,15 +1,12 @@
 package entities;
 
-import java.time.LocalDateTime;
-
 public class CarService extends ServiceOrder {
-    public CarService(Customer customer, LocalDateTime entryDate) {
-        super(customer, entryDate);
+    public CarService(String vehicleModel, Double baseValue, Customer customer) {
+        super(vehicleModel, baseValue, customer);
     }
 
     @Override
     public Double getRepairPrice() {
-        return customer.getModelPrice() * 1.3;
+        return baseValue * 1.3;
     }
-
 }

@@ -4,11 +4,10 @@ public enum MenuOption {
     EXIT(0),
     REGISTER_CUSTOMER(1),
     REGISTER_SERVICE(2),
-    EXPENSIVE(3),
-    LIST(4),
-    REMOVE_CUSTOMER(5),
-    REMOVE_SERVICE(6),
-    PROFIT(7);
+    LIST_SERVICES(3),
+    REMOVE_CUSTOMER(4),
+    REMOVE_SERVICE(5),
+    PROFIT(6);
 
     private final int code;
 
