@@ -59,28 +59,16 @@ public class ConsoleUI {
 
             case REGISTER_SERVICE -> {
                 Customer selectedCustomer = selectCustomer();
-
                 if (selectedCustomer == null) {
                     return;
                 }
-
                 ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
                 addServiceToCustomer(pendingService, selectedCustomer);
             }
-
-            case REMOVE_CUSTOMER -> {
-                Customer selectedCustomer = selectCustomer();
-                if (selectedCustomer == null) {
-                    return;
-                }
-                removeCustomerFromList(selectedCustomer);
-            }
-//
-//            case REMOVE_SERVICE -> {
-//            }
-//
+            case REMOVE_CUSTOMER -> removeCustomerFromList();
+            case REMOVE_SERVICE -> removeServiceFromCustomer();
             case LIST_SERVICES -> listAllServices();
-//            case PROFIT -> showTotalProfit();
+            case PROFIT -> showTotalProfit();
             default -> System.out.println("Opção inválida! Tente novamente.");
         }
     }
@@ -161,7 +149,12 @@ public class ConsoleUI {
         }
     }
 
-    private void removeCustomerFromList(Customer selectedCustomer) {
+    private void removeCustomerFromList() {
+        Customer selectedCustomer = selectCustomer();
+        if (selectedCustomer == null) {
+            return;
+        }
+
         if (serviceManager.removeCustomer(selectedCustomer)) {
             System.out.println("Clente removido com sucesso!");
         } else {
@@ -169,20 +162,37 @@ public class ConsoleUI {
         }
     }
 
-    private void removeServiceOrder() {
-//        if (getAvailableServices() == null) {
-//            System.out.println("Não existe nenhum serviço aqui!");
-//            return;
-//        }
-//
-//        System.out.println("Digite o nome do cliente a ser removido:");
-//        String targetName = sc.nextLine();
-//
-//        if (serviceManager.removeCustomer(targetName)) {
-//            System.out.println("Serviço removido com sucesso!");
-//        } else {
-//            System.out.println("Não foi possível remover o serviço.");
-//        }
+    private void removeServiceFromCustomer() {
+        Customer selectedCustomer = selectCustomer();
+
+        if (selectedCustomer == null) {
+            System.out.println("Operação cancelada.");
+            return;
+        }
+
+        if (!selectedCustomer.hasServices()) {
+            System.out.println("Este cliente não possui nenhum serviço cadastrado.");
+            return;
+        }
+
+        List<ServiceOrder> services = selectedCustomer.getServiceOrders();
+
+        System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n", selectedCustomer.getCustomerName().toUpperCase());
+        for (int i = 0; i < services.size(); i++) {
+            System.out.printf("%d. ", i + 1);
+            showServices(services.get(i));
+        }
+
+        System.out.print("\nDigite o número do serviço que deseja remover: ");
+        int targetIndex = sc.nextInt() - 1;
+        sc.nextLine();
+
+        if (targetIndex >= 0 && targetIndex < services.size()) {
+            services.remove(targetIndex);
+            System.out.println("Serviço removido com sucesso!");
+        } else {
+            System.out.println("Opção de serviço inválida!");
+        }
     }
 
     public void listAllServices() {
@@ -203,16 +213,16 @@ public class ConsoleUI {
     }
 
     public void showTotalProfit() {
-//        double totalModelsPrice = serviceManager.getTotalModelPrices();
-//        double totalRepairsPrice = serviceManager.getTotalRepairPrices();
-//        double totalProfit = totalRepairsPrice - totalModelsPrice;
-//
-//        System.out.printf(
-//                "Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
-//                totalModelsPrice,
-//                totalRepairsPrice,
-//                totalProfit
-//        );
+        double totalModelsPrice = serviceManager.getTotalBaseValue();
+        double totalRepairsPrice = serviceManager.getTotalRepairValue();
+        double totalProfit = totalRepairsPrice - totalModelsPrice;
+
+        System.out.printf(
+                "Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
+                totalModelsPrice,
+                totalRepairsPrice,
+                totalProfit
+        );
     }
 
     private void showServices(ServiceOrder s) {
