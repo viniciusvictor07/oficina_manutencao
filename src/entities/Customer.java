@@ -16,11 +16,6 @@ public class Customer {
         return this.serviceOrders.add(pendingServiceOrder);
     }
 
-    // TODO: implementar removeService
-//    public boolean removeService(String targetName) {
-//        return allCustomers.removeIf(c -> c.getCustomerName().equalsIgnoreCase(targetName));
-//    }
-
     public boolean hasServices() {
         return !this.serviceOrders.isEmpty();
     }
@@ -40,10 +35,5 @@ public class Customer {
     public String getCustomerName() {
         return customerName;
     }
-// TODO: implementar opção de alterar nome do cliente
-
-//    public void setCustomerName(String customerName) {
-//        this.customerName = customerName;
-//    }
 }
 
