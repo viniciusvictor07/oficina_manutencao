@@ -5,10 +5,10 @@ import java.time.LocalDateTime;
 public abstract class ServiceOrder {
     protected LocalDateTime entryDate;
     protected String vehicleModel;
-    protected Double baseValue;
     protected Customer customer;
+    protected double baseValue;
 
-    public ServiceOrder(String vehicleModel, Double baseValue, Customer customer) {
+    public ServiceOrder(String vehicleModel, double baseValue, Customer customer) {
         this.entryDate = LocalDateTime.now();
         this.vehicleModel = vehicleModel;
         this.baseValue = baseValue;

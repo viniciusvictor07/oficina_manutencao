@@ -94,7 +94,7 @@ public class ConsoleUI {
         String vehicleModel = sc.nextLine();
 
         System.out.println("Qual o preço da mão de obra?");
-        Double baseValue = sc.nextDouble();
+        double baseValue = sc.nextDouble();
         sc.nextLine();
 
         if (baseValue <= 0) {

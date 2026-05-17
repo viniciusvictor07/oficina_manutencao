@@ -1,7 +1,7 @@
 package model.entities;
 
 public class MotoService extends ServiceOrder {
-    public MotoService(String vehicleModel, Double baseValue, Customer customer) {
+    public MotoService(String vehicleModel, double baseValue, Customer customer) {
         super(vehicleModel, baseValue, customer);
     }
 
