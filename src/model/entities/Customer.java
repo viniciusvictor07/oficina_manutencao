@@ -20,14 +20,6 @@ public class Customer {
         return !this.serviceOrders.isEmpty();
     }
 
-    public double getTotalSpent() {
-        double totalSpent = 0.0;
-        for (ServiceOrder s : this.serviceOrders) {
-            totalSpent += s.getRepairPrice();
-        }
-        return totalSpent;
-    }
-
     public List<ServiceOrder> getServiceOrders() {
         return serviceOrders;
     }
