@@ -5,6 +5,7 @@ import model.entities.enums.VehicleOption;
 import model.services.ServiceManager;
 
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -165,34 +166,27 @@ public class ConsoleUI {
 
     private void removeServiceFromCustomer() {
         Customer selectedCustomer = selectCustomer();
-
-        if (selectedCustomer == null) {
-            System.out.println("Operação cancelada.");
-            return;
-        }
-
-        if (!selectedCustomer.hasServices()) {
-            System.out.println("Este cliente não possui nenhum serviço cadastrado.");
+        if (selectedCustomer == null || !selectedCustomer.hasServices()) {
+            System.out.println("Este cliente não existe ou não possui nenhum serviço cadastrado.");
             return;
         }
 
         List<ServiceOrder> services = selectedCustomer.getServiceOrders();
-
         System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n", selectedCustomer.getCustomerName().toUpperCase());
         for (int i = 0; i < services.size(); i++) {
             System.out.printf("%d. ", i + 1);
             showServices(services.get(i));
         }
-
-        System.out.print("\nDigite o número do serviço que deseja remover: ");
-        int targetIndex = sc.nextInt() - 1;
-        sc.nextLine();
-
-        if (targetIndex >= 0 && targetIndex < services.size()) {
+        try {
+            System.out.print("\nDigite o número do serviço que deseja remover: ");
+            int targetIndex = sc.nextInt() - 1;
+            sc.nextLine();
             services.remove(targetIndex);
             System.out.println("Serviço removido com sucesso!");
-        } else {
-            System.out.println("Opção de serviço inválida!");
+        } catch (InputMismatchException e) {
+            System.out.println("Opção de serviço inválida! Digite apenas números!");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Índice de serviço inválido!");
         }
     }
 
