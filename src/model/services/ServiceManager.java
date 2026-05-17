@@ -23,7 +23,7 @@ public class ServiceManager {
 
     public double getTotalBaseValue() {
         double baseValues = 0.0;
-        List<Customer> customers = getAllCostumers();
+        List<Customer> customers = getAllCustomers();
 
         for (Customer c : customers) {
             for (ServiceOrder s : c.getServiceOrders()) {
@@ -37,7 +37,7 @@ public class ServiceManager {
 
     public double getTotalRepairValue() {
         double repairValues = 0.0;
-        List<Customer> customers = getAllCostumers();
+        List<Customer> customers = getAllCustomers();
 
         for (Customer c : customers) {
             for (ServiceOrder s : c.getServiceOrders()) {
@@ -47,7 +47,7 @@ public class ServiceManager {
         return repairValues;
     }
 
-    public List<Customer> getAllCostumers() {
+    public List<Customer> getAllCustomers() {
         return this.allCustomers;
     }
 }

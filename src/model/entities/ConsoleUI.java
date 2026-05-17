@@ -107,7 +107,7 @@ public class ConsoleUI {
     }
 
     private Customer selectCustomer() {
-        List<Customer> customers = serviceManager.getAllCostumers();
+        List<Customer> customers = serviceManager.getAllCustomers();
 
         if (customers.isEmpty()) {
             System.out.println("Nenhum cliente cadastrado no sistema.");
@@ -202,7 +202,7 @@ public class ConsoleUI {
     }
 
     public void listAllServices() {
-        List<Customer> customersList = serviceManager.getAllCostumers();
+        List<Customer> customersList = serviceManager.getAllCustomers();
         if (customersList.isEmpty()) {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
