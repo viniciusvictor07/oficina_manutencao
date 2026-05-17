@@ -2,6 +2,7 @@ package model.entities;
 
 import model.enums.MenuOption;
 import model.enums.VehicleOption;
+import model.exception.DomainException;
 import model.services.ServiceManager;
 
 import java.time.format.DateTimeFormatter;
@@ -54,19 +55,8 @@ public class ConsoleUI {
 
     public void handleService(MenuOption selectedOption) {
         switch (selectedOption) {
-            case REGISTER_CUSTOMER -> {
-                Customer pendingCustomer = inputCustomer();
-                addCustomerToList(pendingCustomer);
-            }
-
-            case REGISTER_SERVICE -> {
-                Customer selectedCustomer = selectCustomer();
-                if (selectedCustomer == null) {
-                    return;
-                }
-                ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
-                addServiceToCustomer(pendingService, selectedCustomer);
-            }
+            case REGISTER_CUSTOMER -> registerCustomerFlow();
+            case REGISTER_SERVICE -> registerServiceFlow();
             case REMOVE_CUSTOMER -> removeCustomerFromList();
             case REMOVE_SERVICE -> removeServiceFromCustomer();
             case LIST_SERVICES -> listAllServices();
@@ -80,6 +70,11 @@ public class ConsoleUI {
         String name = sc.nextLine();
 
         return new Customer(name);
+    }
+
+    private void registerCustomerFlow() {
+        Customer pendingCustomer = inputCustomer();
+        addCustomerToList(pendingCustomer);
     }
 
     private ServiceOrder inputServiceOrder(Customer selectedCustomer) {
@@ -102,6 +97,9 @@ public class ConsoleUI {
         Double baseValue = sc.nextDouble();
         sc.nextLine();
 
+        if (baseValue <= 0) {
+            throw new DomainException("O valor da mão de obra deve ser maior que 0.");
+        }
         return switch (selectedVehicleOption) {
             case CAR -> new CarService(vehicleModel, baseValue, selectedCustomer);
             case MOTORCYCLE -> new MotoService(vehicleModel, baseValue, selectedCustomer);
@@ -148,6 +146,19 @@ public class ConsoleUI {
             System.out.println("Serviço registrado com sucesso!");
         } else {
             System.out.println("Erro ao registrar serviço.");
+        }
+    }
+
+    private void registerServiceFlow() {
+        Customer selectedCustomer = selectCustomer();
+        if (selectedCustomer == null) {
+            return;
+        }
+        try {
+            ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
+            addServiceToCustomer(pendingService, selectedCustomer);
+        } catch (DomainException e) {
+            System.out.println("Erro de validação: " + e.getMessage());
         }
     }
 
