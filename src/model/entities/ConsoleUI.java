@@ -211,15 +211,13 @@ public class ConsoleUI {
         for (Customer c : customersList) {
             if (c.hasServices()) {
                 System.out.println("Cliente: " + c.getCustomerName().toUpperCase());
-                for (ServiceOrder s : c.getServiceOrders()) {
-                    showServices(s);
+                for (ServiceOrder s : c.getServiceOrders()) showServices(s);
                 }
             }
         }
-    }
 
     public void showTotalProfit() {
-        double totalModelsPrice = serviceManager.getTotalBaseValue();
+        double totalModelsPrice = serviceManager.getTotalBaseValue[();
         double totalRepairsPrice = serviceManager.getTotalRepairValue();
         double totalProfit = totalRepairsPrice - totalModelsPrice;
 
