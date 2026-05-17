@@ -1,7 +1,7 @@
 package model.entities;
 
-import model.entities.enums.MenuOption;
-import model.entities.enums.VehicleOption;
+import model.enums.MenuOption;
+import model.enums.VehicleOption;
 import model.services.ServiceManager;
 
 import java.time.format.DateTimeFormatter;
