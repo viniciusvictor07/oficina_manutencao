@@ -217,7 +217,7 @@ public class ConsoleUI {
         }
 
     public void showTotalProfit() {
-        double totalModelsPrice = serviceManager.getTotalBaseValue[();
+        double totalModelsPrice = serviceManager.getTotalBaseValue();
         double totalRepairsPrice = serviceManager.getTotalRepairValue();
         double totalProfit = totalRepairsPrice - totalModelsPrice;
 
