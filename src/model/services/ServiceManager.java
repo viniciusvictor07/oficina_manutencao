@@ -26,12 +26,10 @@ public class ServiceManager {
         List<Customer> customers = getAllCustomers();
 
         for (Customer c : customers) {
-            for (ServiceOrder s : c.getServiceOrders()) {
+            for (ServiceOrder s : c.getCustomerOrders()) {
                 baseValues += s.getBaseValue();
             }
-
         }
-
         return baseValues;
     }
 
@@ -40,7 +38,7 @@ public class ServiceManager {
         List<Customer> customers = getAllCustomers();
 
         for (Customer c : customers) {
-            for (ServiceOrder s : c.getServiceOrders()) {
+            for (ServiceOrder s : c.getCustomerOrders()) {
                 repairValues += s.getRepairPrice();
             }
         }

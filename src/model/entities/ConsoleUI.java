@@ -182,7 +182,7 @@ public class ConsoleUI {
             return;
         }
 
-        List<ServiceOrder> services = selectedCustomer.getServiceOrders();
+        List<ServiceOrder> services = selectedCustomer.getCustomerOrders();
         System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n", selectedCustomer.getCustomerName().toUpperCase());
         for (int i = 0; i < services.size(); i++) {
             System.out.printf("%d. ", i + 1);
@@ -211,7 +211,7 @@ public class ConsoleUI {
         for (Customer c : customersList) {
             if (c.hasServices()) {
                 System.out.println("Cliente: " + c.getCustomerName().toUpperCase());
-                for (ServiceOrder s : c.getServiceOrders()) showServices(s);
+                for (ServiceOrder s : c.getCustomerOrders()) showServices(s);
                 }
             }
         }
