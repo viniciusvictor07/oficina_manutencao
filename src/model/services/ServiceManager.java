@@ -8,13 +8,20 @@ import java.util.List;
 
 public class ServiceManager {
     private final List<Customer> allCustomers;
+    private final List<ServiceOrder> globalOrders;
 
     public ServiceManager() {
         this.allCustomers = new ArrayList<>();
+        this.globalOrders = new ArrayList<>();
     }
 
     public boolean addCustomer(Customer pendingCustomer) {
         return this.allCustomers.add(pendingCustomer);
+    }
+
+    public void registerServiceOrder(Customer customer, ServiceOrder pendingOrder) {
+        this.globalOrders.add(pendingOrder);
+        customer.addServiceOrder(pendingOrder);
     }
 
     public boolean removeCustomer(Customer selectedCustomer) {
@@ -23,24 +30,19 @@ public class ServiceManager {
 
     public double getTotalBaseValue() {
         double baseValues = 0.0;
-        List<Customer> customers = getAllCustomers();
 
-        for (Customer c : customers) {
-            for (ServiceOrder s : c.getCustomerOrders()) {
-                baseValues += s.getBaseValue();
-            }
+        for (ServiceOrder s : globalOrders) {
+            baseValues += s.getBaseValue();
         }
+
         return baseValues;
     }
 
     public double getTotalRepairValue() {
         double repairValues = 0.0;
-        List<Customer> customers = getAllCustomers();
 
-        for (Customer c : customers) {
-            for (ServiceOrder s : c.getCustomerOrders()) {
-                repairValues += s.getRepairPrice();
-            }
+        for (ServiceOrder s : globalOrders) {
+            repairValues += s.getRepairPrice();
         }
         return repairValues;
     }

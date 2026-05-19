@@ -157,6 +157,7 @@ public class ConsoleUI {
         try {
             ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
             addServiceToCustomer(pendingService, selectedCustomer);
+            serviceManager.registerServiceOrder(selectedCustomer, pendingService);
         } catch (DomainException e) {
             System.out.println("Erro de validação: " + e.getMessage());
         }
@@ -212,9 +213,9 @@ public class ConsoleUI {
             if (c.hasServices()) {
                 System.out.println("Cliente: " + c.getCustomerName().toUpperCase());
                 for (ServiceOrder s : c.getCustomerOrders()) showServices(s);
-                }
             }
         }
+    }
 
     public void showTotalProfit() {
         double totalModelsPrice = serviceManager.getTotalBaseValue();
