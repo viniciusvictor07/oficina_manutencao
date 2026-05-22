@@ -1,9 +1,8 @@
 package model.entities;
 
-import model.enums.MenuOption;
-import model.enums.VehicleOption;
-import model.exception.DomainException;
-import model.services.ServiceManager;
+import model.enums.*;
+import model.exception.*;
+import model.services.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
