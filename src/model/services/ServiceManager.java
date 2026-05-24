@@ -19,9 +19,8 @@ public class ServiceManager {
         return this.allCustomers.add(pendingCustomer);
     }
 
-    public void registerServiceOrder(Customer customer, ServiceOrder pendingOrder) {
+    public void registerServiceToGlobalOrders(ServiceOrder pendingOrder) {
         this.globalOrders.add(pendingOrder);
-        customer.addServiceOrder(pendingOrder);
     }
 
     public boolean removeCustomer(Customer selectedCustomer) {
