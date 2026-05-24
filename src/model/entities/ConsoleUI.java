@@ -92,12 +92,12 @@ public class ConsoleUI {
         System.out.println("Qual o modelo do veículo?");
         String vehicleModel = sc.nextLine();
 
-        System.out.println("Qual o preço da mão de obra?");
+        System.out.println("Qual o preço base?");
         double baseValue = sc.nextDouble();
         sc.nextLine();
 
         if (baseValue <= 0) {
-            throw new DomainException("O valor da mão de obra deve ser maior que 0.");
+            throw new DomainException("O valor base deve ser maior que 0.");
         }
         return switch (selectedVehicleOption) {
             case CAR -> new CarService(vehicleModel, baseValue, selectedCustomer);
@@ -156,7 +156,7 @@ public class ConsoleUI {
         try {
             ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
             addServiceToCustomer(pendingService, selectedCustomer);
-            serviceManager.registerServiceOrder(selectedCustomer, pendingService);
+            serviceManager.registerServiceToGlobalOrders(pendingService);
         } catch (DomainException e) {
             System.out.println("Erro de validação: " + e.getMessage());
         }
@@ -210,7 +210,7 @@ public class ConsoleUI {
 
         for (Customer c : customersList) {
             if (c.hasServices()) {
-                System.out.println("Cliente: " + c.getCustomerName().toUpperCase());
+                System.out.printf("--------%s--------%n", c.getCustomerName().toUpperCase());
                 for (ServiceOrder s : c.getCustomerOrders()) showServices(s);
             }
         }
@@ -231,7 +231,7 @@ public class ConsoleUI {
 
     private void showServices(ServiceOrder s) {
         System.out.printf(
-                "Horário: %s | Veículo: %s | Mão de Obra: R$ %.2f | Conserto: R$ %.2f%n",
+                "Horário: %s | Veículo: %s | Valor base: R$ %.2f | Conserto: R$ %.2f%n",
                 s.getEntryDate().format(fmt),
                 s.getVehicleModel(),
                 s.getBaseValue(),
