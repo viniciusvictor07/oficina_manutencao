@@ -77,13 +77,7 @@ public class ConsoleUI {
     }
 
     private ServiceOrder inputServiceOrder(Customer selectedCustomer) {
-        System.out.println("Qual o tipo do veículo?");
-        System.out.println("1 - Carro");
-        System.out.println("2 - Moto");
-
-        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(sc.nextInt());
-        sc.nextLine();
-
+        VehicleOption selectedVehicleOption = getVehicleOption();
         if (selectedVehicleOption == null) {
             System.out.println("Opção inválida! Tente novamente.");
             return null;
@@ -227,6 +221,17 @@ public class ConsoleUI {
                 totalRepairsPrice,
                 totalProfit
         );
+    }
+
+    private VehicleOption getVehicleOption() {
+        System.out.println("Qual o tipo do veículo?");
+        System.out.println("1 - Carro");
+        System.out.println("2 - Moto");
+
+        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(sc.nextInt());
+        sc.nextLine();
+
+        return selectedVehicleOption;
     }
 
     private void showServices(ServiceOrder s) {
