@@ -198,6 +198,22 @@ public class ConsoleUI {
         }
     }
 
+    private TaxManager getTaxAdjustment() {
+        System.out.println("Qual o ajuste de taxa?");
+        System.out.println("1 - Sem Ajuste (Padrão)");
+        System.out.println("2 - Desconto Black Friday (10% de desconto)");
+        System.out.println("3 - Taxa de Urgência (+ R$ 50)");
+        System.out.println();
+        int taxOption = sc.nextInt();
+
+        TaxOption selectedTax = TaxOption.searchByCode(taxOption);
+        return switch (selectedTax) {
+            case STANDARD -> new NoAdjustment();
+            case BLACK_FRIDAY -> new BlackFridayDiscount();
+            case URGENCY -> new UrgencyFee();
+        };
+    }
+
     public void listAllServices() {
         List<Customer> customersList = serviceManager.getAllCustomers();
         if (customersList.isEmpty()) {
