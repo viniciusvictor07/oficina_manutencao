@@ -1,5 +1,7 @@
 package model.entities;
 
+import model.services.TaxManager;
+
 import java.time.LocalDateTime;
 
 public abstract class ServiceOrder {
@@ -7,12 +9,14 @@ public abstract class ServiceOrder {
     protected String vehicleModel;
     protected Customer customer;
     protected double baseValue;
+    protected TaxManager adjusment;
 
-    public ServiceOrder(String vehicleModel, double baseValue, Customer customer) {
+    public ServiceOrder(String vehicleModel, double baseValue, Customer customer, TaxManager adjusment) {
         this.entryDate = LocalDateTime.now();
         this.vehicleModel = vehicleModel;
         this.baseValue = baseValue;
         this.customer = customer;
+        this.adjusment = adjusment;
     }
 
     public abstract Double getBaseRepairPrice();
