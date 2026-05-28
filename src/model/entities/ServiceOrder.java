@@ -19,7 +19,7 @@ public abstract class ServiceOrder {
         this.adjusment = adjusment;
     }
 
-    public abstract Double getBaseRepairPrice();
+    public abstract Double getFinalRepairPrice();
 
     public LocalDateTime getEntryDate() {
         return entryDate;
