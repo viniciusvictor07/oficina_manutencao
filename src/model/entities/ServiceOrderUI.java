@@ -45,14 +45,7 @@ public class ServiceOrderUI {
         System.out.println("Qual o modelo do veículo?");
         String vehicleModel = sc.nextLine();
 
-        System.out.println("Qual o preço base?");
-        double baseValue = sc.nextDouble();
-        sc.nextLine();
-
-        if (baseValue <= 0) {
-            throw new DomainException("O valor base deve ser maior que 0.");
-        }
-
+        double baseValue = getBaseValue();
         TaxManager adjustment = getTaxAdjustment();
         return createServiceOrder(selectedVehicleOption, vehicleModel, baseValue, selectedCustomer, adjustment);
     }
@@ -82,6 +75,18 @@ public class ServiceOrderUI {
             case BLACK_FRIDAY -> new BlackFridayDiscount();
             case URGENCY -> new UrgencyFee();
         };
+    }
+
+    public double getBaseValue() {
+        System.out.println("Qual o preço base?");
+        double baseValue = sc.nextDouble();
+        sc.nextLine();
+
+        if (baseValue <= 0) {
+            throw new DomainException("O valor base deve ser maior que 0.");
+        }
+
+        return baseValue;
     }
 
     private ServiceOrder createServiceOrder(VehicleOption option, String model, double value, Customer customer, TaxManager tax) {
