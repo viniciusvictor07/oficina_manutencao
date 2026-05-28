@@ -240,7 +240,7 @@ public class ConsoleUI {
                 s.getEntryDate().format(fmt),
                 s.getVehicleModel(),
                 s.getBaseValue(),
-                s.getRepairPrice()
+                s.getBaseRepairPrice()
         );
     }
 }
