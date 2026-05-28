@@ -82,7 +82,6 @@ public class ConsoleUI {
             System.out.println("Opção inválida! Tente novamente.");
             return null;
         }
-
         System.out.println("Qual o modelo do veículo?");
         String vehicleModel = sc.nextLine();
 
@@ -94,12 +93,8 @@ public class ConsoleUI {
             throw new DomainException("O valor base deve ser maior que 0.");
         }
 
-        TaxManager adjusment = new NoAdjustment();
-
-        return switch (selectedVehicleOption) {
-            case CAR -> new CarService(vehicleModel, baseValue, selectedCustomer, adjusment);
-            case MOTORCYCLE -> new MotoService(vehicleModel, baseValue, selectedCustomer, adjusment);
-        };
+        TaxManager adjustment = getTaxAdjustment();
+        return createServiceOrder(selectedVehicleOption, vehicleModel, baseValue, selectedCustomer, adjustment);
     }
 
     private Customer selectCustomer() {
@@ -135,6 +130,13 @@ public class ConsoleUI {
         } else {
             System.out.println("Erro ao registrar serviço.");
         }
+    }
+
+    private ServiceOrder createServiceOrder(VehicleOption option, String model, double value, Customer customer, TaxManager tax) {
+        return switch (option) {
+            case CAR -> new CarService(model, value, customer, tax);
+            case MOTORCYCLE -> new MotoService(model, value, customer, tax);
+        };
     }
 
     private void addServiceToCustomer(ServiceOrder pendingService, Customer selectedCustomer) {
