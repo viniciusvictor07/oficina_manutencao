@@ -28,22 +28,22 @@ public class ServiceManager {
     }
 
     public double getTotalBaseValue() {
-        double baseValues = 0.0;
+        double TotalBaseValues = 0.0;
 
         for (ServiceOrder s : globalOrders) {
-            baseValues += s.getBaseValue();
+            TotalBaseValues += s.getBaseValue();
         }
 
-        return baseValues;
+        return TotalBaseValues;
     }
 
     public double getTotalRepairValue() {
-        double repairValues = 0.0;
+        double TotalRepairValues = 0.0;
 
         for (ServiceOrder s : globalOrders) {
-            repairValues += s.getBaseRepairPrice();
+            TotalRepairValues += s.getBaseRepairPrice();
         }
-        return repairValues;
+        return TotalRepairValues;
     }
 
     public List<Customer> getAllCustomers() {
