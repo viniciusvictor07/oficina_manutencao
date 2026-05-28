@@ -6,7 +6,7 @@ public class MotoService extends ServiceOrder {
     }
 
     @Override
-    public Double getRepairPrice() {
+    public Double getBaseRepairPrice() {
         return baseValue * 1.2;
     }
 }

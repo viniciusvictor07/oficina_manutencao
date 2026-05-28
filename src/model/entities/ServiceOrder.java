@@ -15,7 +15,7 @@ public abstract class ServiceOrder {
         this.customer = customer;
     }
 
-    public abstract Double getRepairPrice();
+    public abstract Double getBaseRepairPrice();
 
     public LocalDateTime getEntryDate() {
         return entryDate;
