@@ -9,6 +9,7 @@ public class CarService extends ServiceOrder {
 
     @Override
     public Double getFinalRepairPrice() {
-        return baseValue * 1.3;
+        double repairPrice = baseValue * 1.3;
+        return adjusment.applyAdjustment(repairPrice);
     }
 }
