@@ -112,7 +112,10 @@ public class ServiceOrderUI {
         }
 
         List<ServiceOrder> services = selectedCustomer.getCustomerOrders();
-        System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n", selectedCustomer.getCustomerName().toUpperCase());
+
+        System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n",
+                selectedCustomer.getCustomerName().toUpperCase());
+
         for (int i = 0; i < services.size(); i++) {
             System.out.printf("%d. ", i + 1);
             showServices(services.get(i));
@@ -121,6 +124,7 @@ public class ServiceOrderUI {
             System.out.print("\nDigite o número do serviço que deseja remover: ");
             int targetIndex = sc.nextInt() - 1;
             sc.nextLine();
+
             services.remove(targetIndex);
             System.out.println("Serviço removido com sucesso!");
         } catch (InputMismatchException e) {
