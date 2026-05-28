@@ -41,7 +41,7 @@ public class ServiceManager {
         double TotalRepairValues = 0.0;
 
         for (ServiceOrder s : globalOrders) {
-            TotalRepairValues += s.getBaseRepairPrice();
+            TotalRepairValues += s.getFinalRepairPrice();
         }
         return TotalRepairValues;
     }

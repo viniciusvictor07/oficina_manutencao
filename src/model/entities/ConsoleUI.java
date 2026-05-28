@@ -243,7 +243,7 @@ public class ConsoleUI {
                 s.getEntryDate().format(fmt),
                 s.getVehicleModel(),
                 s.getBaseValue(),
-                s.getBaseRepairPrice()
+                s.getFinalRepairPrice()
         );
     }
 }
