@@ -9,7 +9,7 @@ public class MotoService extends ServiceOrder {
 
     @Override
     public Double getFinalRepairPrice() {
-        double repairPrice = baseValue * 1.2;
-        return adjusment.applyAdjustment(repairPrice);
+        double repairPrice = getBaseValue() * 1.2;
+        return getAdjustment().applyAdjustment(repairPrice);
     }
 }
