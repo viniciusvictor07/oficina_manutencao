@@ -56,13 +56,10 @@ public class CustomerUI {
         }
 
         System.out.println("--- Selecione o Cliente ---");
-
-        for (int i = 0; i < customers.size(); i++) {
-            System.out.printf("%d. %s%n", i + 1, customers.get(i).getCustomerName());
-        }
+        int[] i = {1};
+        customers.forEach(c -> System.out.printf("%d. %s%n", i[0]++, c.getCustomerName()));
 
         System.out.print("Digite o número do cliente: ");
-
         int index = sc.nextInt() - 1;
         sc.nextLine();
 

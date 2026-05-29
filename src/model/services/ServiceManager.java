@@ -28,22 +28,15 @@ public class ServiceManager {
     }
 
     public double getTotalBaseValue() {
-        double TotalBaseValues = 0.0;
-
-        for (ServiceOrder s : globalOrders) {
-            TotalBaseValues += s.getBaseValue();
-        }
-
-        return TotalBaseValues;
+        return globalOrders.stream()
+                .mapToDouble(ServiceOrder::getBaseValue)
+                .sum();
     }
 
     public double getTotalRepairValue() {
-        double TotalRepairValues = 0.0;
-
-        for (ServiceOrder s : globalOrders) {
-            TotalRepairValues += s.getFinalRepairPrice();
-        }
-        return TotalRepairValues;
+        return globalOrders.stream()
+                .mapToDouble(ServiceOrder::getFinalRepairPrice)
+                .sum();
     }
 
     public List<Customer> getAllCustomers() {
