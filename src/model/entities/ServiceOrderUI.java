@@ -85,7 +85,6 @@ public class ServiceOrderUI {
         if (baseValue <= 0) {
             throw new DomainException("O valor base deve ser maior que 0.");
         }
-
         return baseValue;
     }
 
