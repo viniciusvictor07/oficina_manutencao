@@ -1,15 +1,14 @@
 package model.entities;
 
 import model.services.TaxManager;
-
 import java.time.LocalDateTime;
 
 public abstract class ServiceOrder {
-    protected LocalDateTime entryDate;
-    protected String vehicleModel;
-    protected Customer customer;
-    protected double baseValue;
-    protected TaxManager adjusment;
+    private final LocalDateTime entryDate;
+    private final String vehicleModel;
+    private final Customer customer;
+    private final double baseValue;
+    private final TaxManager adjusment;
 
     public ServiceOrder(String vehicleModel, double baseValue, Customer customer, TaxManager adjusment) {
         this.entryDate = LocalDateTime.now();
@@ -29,7 +28,15 @@ public abstract class ServiceOrder {
         return vehicleModel;
     }
 
-    public Double getBaseValue() {
+    public double getBaseValue() {
         return baseValue;
+    }
+
+    public TaxManager getAdjustment() {
+        return adjusment;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 }
