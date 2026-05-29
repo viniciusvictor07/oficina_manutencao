@@ -112,14 +112,13 @@ public class ServiceOrderUI {
 
         List<ServiceOrder> services = selectedCustomer.getCustomerOrders();
 
-        System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n",
-                selectedCustomer.getCustomerName().toUpperCase());
-
+        System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n", selectedCustomer.getCustomerName().toUpperCase());
         int[] i = {1};
         services.forEach(s -> {
             System.out.print(i[0]++ + ". ");
             showServices(s);
         });
+
         try {
             System.out.print("\nDigite o número do serviço que deseja remover: ");
             int targetIndex = sc.nextInt() - 1;
@@ -140,7 +139,6 @@ public class ServiceOrderUI {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
-
         customersList.stream()
                 .filter(Customer::hasServices)
                 .forEach(c -> {
