@@ -41,7 +41,7 @@ public class CustomerUI {
         }
 
         if (serviceManager.removeCustomer(selectedCustomer)) {
-            System.out.println("Clente removido com sucesso!");
+            System.out.println("Cliente removido com sucesso!");
         } else {
             System.out.println("Falha ao remover cliente.");
         }
