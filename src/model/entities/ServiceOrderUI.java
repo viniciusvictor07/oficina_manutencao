@@ -164,9 +164,7 @@ public class ServiceOrderUI {
 
         System.out.printf(
                 "Valor total de serviços: R$ %.2f%nValor total de conserto: R$ %.2f%nLucro total: R$ %.2f%n",
-                totalModelsPrice,
-                totalRepairsPrice,
-                totalProfit
+                totalModelsPrice, totalRepairsPrice, totalProfit
         );
     }
 }
