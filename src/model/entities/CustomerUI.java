@@ -1,6 +1,5 @@
 package model.entities;
 
-import model.dao.CustomerDAO;
 import model.exception.DomainException;
 import model.services.ServiceManager;
 
@@ -30,10 +29,7 @@ public class CustomerUI {
 
     private void addCustomerToList(Customer pendingCustomer) {
         try {
-            CustomerDAO customerDAO = new CustomerDAO();
-
             if (serviceManager.addCustomer(pendingCustomer)) {
-                customerDAO.save(pendingCustomer);
                 System.out.println("Cliente registrado com sucesso no banco e na memória!");
             } else {
                 System.out.println("Erro ao registrar na memória.");

@@ -1,5 +1,6 @@
 package model.services;
 
+import model.dao.CustomerDAO;
 import model.entities.Customer;
 import model.entities.ServiceOrder;
 
@@ -16,7 +17,9 @@ public class ServiceManager {
     }
 
     public boolean addCustomer(Customer pendingCustomer) {
-        return this.allCustomers.add(pendingCustomer);
+        CustomerDAO customerDAO = new CustomerDAO();
+        customerDAO.save(pendingCustomer);
+        return true;
     }
 
     public void registerServiceToGlobalOrders(ServiceOrder pendingOrder) {
@@ -24,7 +27,9 @@ public class ServiceManager {
     }
 
     public boolean removeCustomer(Customer selectedCustomer) {
-        return allCustomers.removeIf(c -> c == selectedCustomer);
+        CustomerDAO customerDAO = new CustomerDAO();
+        customerDAO.delete(selectedCustomer);
+        return true;
     }
 
     public double getTotalBaseValue() {
@@ -40,6 +45,6 @@ public class ServiceManager {
     }
 
     public List<Customer> getAllCustomers() {
-        return this.allCustomers;
+        return new CustomerDAO().findAll();
     }
 }
