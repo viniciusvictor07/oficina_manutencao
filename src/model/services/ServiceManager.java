@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceManager {
-    private final List<Customer> allCustomers;
     private final List<ServiceOrder> globalOrders;
 
     public ServiceManager() {
-        this.allCustomers = new ArrayList<>();
         this.globalOrders = new ArrayList<>();
     }
 
