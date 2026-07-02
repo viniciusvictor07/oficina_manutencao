@@ -44,4 +44,18 @@ public class CustomerDAO {
             throw new RuntimeException("Erro ao listar clientes no banco: " + e.getMessage());
         }
     }
+
+    public void delete(Customer customer) {
+        String sql = "DELETE FROM tb_customer WHERE name = ?";
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+
+            st.setString(1, customer.getCustomerName());
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting customer from database: " + e.getMessage());
+        }
+    }
 }
