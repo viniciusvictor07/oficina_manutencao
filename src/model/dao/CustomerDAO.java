@@ -58,4 +58,22 @@ public class CustomerDAO {
             throw new RuntimeException("Error deleting customer from database: " + e.getMessage());
         }
     }
+
+    public boolean existsByName(String customerName) {
+        String sql = "SELECT COUNT(*) FROM tb_customer WHERE name = ?";
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+
+            st.setString(1, customerName);
+            try (ResultSet rs = st.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Erro ao verificar nome no banco de dados: " + e.getMessage());
+        }
+        return false;
+    }
 }
