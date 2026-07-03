@@ -3,6 +3,7 @@ package model.services;
 import model.dao.CustomerDAO;
 import model.entities.Customer;
 import model.entities.ServiceOrder;
+import model.exception.DomainException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,11 @@ public class ServiceManager {
 
     public boolean addCustomer(Customer pendingCustomer) {
         CustomerDAO customerDAO = new CustomerDAO();
+
+        if (customerDAO.existsByName(pendingCustomer.getCustomerName())) {
+            throw new DomainException("Já existe um cliente cadastrado com este nome.");
+        }
+
         customerDAO.save(pendingCustomer);
         return true;
     }
