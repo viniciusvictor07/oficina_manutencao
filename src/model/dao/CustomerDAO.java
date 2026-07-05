@@ -11,13 +11,13 @@ import java.util.List;
 
 public class CustomerDAO {
 
-    public void save(Customer customer) {
+    public void save(Customer pendingCustomer) {
         String sql = "INSERT INTO tb_customer (name) VALUES (?)";
 
         try (Connection conn = DB.getConnection();
              PreparedStatement st = conn.prepareStatement(sql)) {
 
-            st.setString(1, customer.getCustomerName());
+            st.setString(1, pendingCustomer.getCustomerName());
             st.executeUpdate();
 
         } catch (SQLException e) {
@@ -34,8 +34,9 @@ public class CustomerDAO {
              ResultSet rs = st.executeQuery()) {
 
             while (rs.next()) {
+                int dbId = rs.getInt("id");
                 String dbName = rs.getString("name");
-                Customer customer = new Customer(dbName);
+                Customer customer = new Customer(dbId, dbName);
                 list.add(customer);
             }
             return list;
@@ -45,13 +46,13 @@ public class CustomerDAO {
         }
     }
 
-    public void delete(Customer customer) {
-        String sql = "DELETE FROM tb_customer WHERE name = ?";
+    public void delete(Customer selectedCustomer) {
+        String sql = "DELETE FROM tb_customer WHERE id = ?";
 
         try (Connection conn = DB.getConnection();
              PreparedStatement st = conn.prepareStatement(sql)) {
 
-            st.setString(1, customer.getCustomerName());
+            st.setInt(1, selectedCustomer.getId());
             st.executeUpdate();
 
         } catch (SQLException e) {
