@@ -8,7 +8,9 @@ import model.services.*;
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class ServiceOrderUI {
     private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -30,7 +32,7 @@ public class ServiceOrderUI {
         try {
             ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
             addServiceToCustomer(pendingService, selectedCustomer);
-            serviceManager.registerServiceToGlobalOrders(pendingService);
+            serviceManager.registerService(pendingService);
         } catch (DomainException e) {
             System.out.println("Erro de validação: " + e.getMessage());
         }
@@ -134,17 +136,20 @@ public class ServiceOrderUI {
     }
 
     public void listAllServices() {
-        List<Customer> customersList = serviceManager.getAllCustomers();
-        if (customersList.isEmpty()) {
+        List<ServiceOrder> servicesList = serviceManager.getAllServices();
+        if (servicesList.isEmpty()) {
             System.out.println("Não existe nenhum serviço aqui!");
             return;
         }
-        customersList.stream()
-                .filter(Customer::hasServices)
-                .forEach(c -> {
-                    System.out.printf("--------%s--------%n", c.getCustomerName().toUpperCase());
-                    c.getCustomerOrders().forEach(this::showServices);
-                });
+
+        Map<Customer, List<ServiceOrder>> servicesByCustomer = servicesList.stream()
+                .collect(Collectors.groupingBy(ServiceOrder::getCustomer));
+
+        servicesByCustomer.forEach((customer, orders) -> {
+//            System.out.println();
+            System.out.printf("----- %s -----\n", customer.getCustomerName().toUpperCase());
+            orders.forEach(this::showServices);
+        });
     }
 
     private void showServices(ServiceOrder s) {
