@@ -1,20 +1,14 @@
 package model.services;
 
 import model.dao.CustomerDAO;
+import model.dao.ServiceOrderDAO;
 import model.entities.Customer;
 import model.entities.ServiceOrder;
 import model.exception.DomainException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceManager {
-    private final List<ServiceOrder> globalOrders;
-
-    public ServiceManager() {
-        this.globalOrders = new ArrayList<>();
-    }
-
     public boolean addCustomer(Customer pendingCustomer) {
         CustomerDAO customerDAO = new CustomerDAO();
 
@@ -26,8 +20,9 @@ public class ServiceManager {
         return true;
     }
 
-    public void registerServiceToGlobalOrders(ServiceOrder pendingOrder) {
-        this.globalOrders.add(pendingOrder);
+    public void registerService(ServiceOrder pendingOrder) {
+        ServiceOrderDAO dao = new ServiceOrderDAO();
+        dao.save(pendingOrder);
     }
 
     public boolean removeCustomer(Customer selectedCustomer) {
@@ -36,14 +31,19 @@ public class ServiceManager {
         return true;
     }
 
+    public List<ServiceOrder> getAllServices() {
+        ServiceOrderDAO dao = new ServiceOrderDAO();
+        return dao.findAll();
+    }
+
     public double getTotalBaseValue() {
-        return globalOrders.stream()
+        return getAllServices().stream()
                 .mapToDouble(ServiceOrder::getBaseValue)
                 .sum();
     }
 
     public double getTotalRepairValue() {
-        return globalOrders.stream()
+        return getAllServices().stream()
                 .mapToDouble(ServiceOrder::getFinalRepairPrice)
                 .sum();
     }
