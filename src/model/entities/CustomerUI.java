@@ -53,23 +53,23 @@ public class CustomerUI {
     }
 
     public Customer selectCustomer() {
-        List<Customer> customers = serviceManager.getAllCustomers();
+        List<Customer> customersList = serviceManager.getAllCustomers();
 
-        if (customers.isEmpty()) {
+        if (customersList.isEmpty()) {
             System.out.println("Nenhum cliente cadastrado no sistema.");
             return null;
         }
 
         System.out.println("--- Selecione o Cliente ---");
         int[] i = {1};
-        customers.forEach(c -> System.out.printf("%d. %s%n", i[0]++, c.getCustomerName()));
+        customersList.forEach(c -> System.out.printf("%d. %s%n", i[0]++, c.getCustomerName()));
 
         System.out.print("Digite o número do cliente: ");
         int index = sc.nextInt() - 1;
         sc.nextLine();
 
-        if (index >= 0 && index < customers.size()) {
-            return customers.get(index);
+        if (index >= 0 && index < customersList.size()) {
+            return customersList.get(index);
         } else {
             System.out.println("Índice inválido!");
             return null;
