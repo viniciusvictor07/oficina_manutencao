@@ -16,19 +16,8 @@ public class CustomerUI {
     }
 
     public void registerCustomerFlow() {
-        Customer pendingCustomer = inputCustomer();
-        addCustomerToList(pendingCustomer);
-    }
-
-    private Customer inputCustomer() {
-        System.out.println("Qual nome do cliente?");
-        String name = sc.nextLine();
-
-        return new Customer(name);
-    }
-
-    private void addCustomerToList(Customer pendingCustomer) {
         try {
+            Customer pendingCustomer = inputCustomer();
             if (serviceManager.addCustomer(pendingCustomer)) {
                 System.out.println("Cliente registrado com sucesso no banco e na memória!");
             } else {
@@ -39,7 +28,7 @@ public class CustomerUI {
         }
     }
 
-    public void removeCustomerFromList() {
+    public void removeCustomerFlow() {
         Customer selectedCustomer = selectCustomer();
         if (selectedCustomer == null) {
             return;
@@ -50,6 +39,13 @@ public class CustomerUI {
         } else {
             System.out.println("Falha ao remover cliente.");
         }
+    }
+
+    private Customer inputCustomer() {
+        System.out.println("Qual nome do cliente?");
+        String name = sc.nextLine();
+
+        return new Customer(name);
     }
 
     public Customer selectCustomer() {
