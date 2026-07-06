@@ -10,6 +10,7 @@ public abstract class ServiceOrder {
     private final Customer customer;
     private final double baseValue;
     private final TaxManager adjusment;
+    private int id;
 
     public ServiceOrder(String vehicleModel, double baseValue, Customer customer, TaxManager adjusment) {
         this.entryDate = LocalDateTime.now();
@@ -47,5 +48,13 @@ public abstract class ServiceOrder {
 
     public Customer getCustomer() {
         return customer;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
