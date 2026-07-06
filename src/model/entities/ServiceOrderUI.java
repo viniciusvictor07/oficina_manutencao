@@ -31,8 +31,7 @@ public class ServiceOrderUI {
         }
         try {
             ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
-            addServiceToCustomer(pendingService, selectedCustomer);
-            serviceManager.registerService(pendingService);
+            serviceManager.addService(pendingService);
         } catch (DomainException e) {
             System.out.println("Erro de validação: " + e.getMessage());
         }
@@ -97,62 +96,19 @@ public class ServiceOrderUI {
         };
     }
 
-    private void addServiceToCustomer(ServiceOrder pendingService, Customer selectedCustomer) {
-        if (pendingService != null && selectedCustomer.addServiceOrder(pendingService)) {
-            System.out.println("Serviço registrado com sucesso!");
-        } else {
-            System.out.println("Erro ao registrar serviço.");
-        }
-    }
 
-    public void removeServiceFromCustomer() {
-        Customer selectedCustomer = customerUI.selectCustomer();
-        if (selectedCustomer == null || !selectedCustomer.hasServices()) {
-            System.out.println("Este cliente não existe ou não possui nenhum serviço cadastrado.");
-            return;
-        }
 
-        List<ServiceOrder> services = selectedCustomer.getCustomerOrders();
-
-        System.out.printf("\n--- SERVIÇOS DO CLIENTE: %s---%n", selectedCustomer.getCustomerName().toUpperCase());
-        int[] i = {1};
-        services.forEach(s -> {
-            System.out.print(i[0]++ + ". ");
-            showServices(s);
-        });
-
-        try {
-            System.out.print("\nDigite o número do serviço que deseja remover: ");
-            int targetIndex = sc.nextInt() - 1;
-            sc.nextLine();
-
-            services.remove(targetIndex);
-            System.out.println("Serviço removido com sucesso!");
-        } catch (InputMismatchException e) {
-            System.out.println("Opção de serviço inválida! Digite apenas números!");
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Índice de serviço inválido!");
-        }
-    }
-
-    public void listAllServices() {
-        List<ServiceOrder> servicesList = serviceManager.getAllServices();
-        if (servicesList.isEmpty()) {
-            System.out.println("Não existe nenhum serviço aqui!");
-            return;
-        }
-
+    private void displayGroupedServices(List<ServiceOrder> servicesList) {
         Map<Customer, List<ServiceOrder>> servicesByCustomer = servicesList.stream()
                 .collect(Collectors.groupingBy(ServiceOrder::getCustomer));
 
         servicesByCustomer.forEach((customer, orders) -> {
-//            System.out.println();
             System.out.printf("----- %s -----\n", customer.getCustomerName().toUpperCase());
-            orders.forEach(this::showServices);
+            orders.forEach(this::printServiceDetails);
         });
     }
 
-    private void showServices(ServiceOrder s) {
+    private void printServiceDetails(ServiceOrder s) {
         System.out.printf(
                 "Horário: %s | Veículo: %s | Valor base: R$ %.2f | Conserto: R$ %.2f%n",
                 s.getEntryDate().format(fmt),
