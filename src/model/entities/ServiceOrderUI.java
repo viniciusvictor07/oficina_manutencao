@@ -37,6 +37,52 @@ public class ServiceOrderUI {
         }
     }
 
+    public void removeServiceFlow() {
+        Customer selectedCustomer = customerUI.selectCustomer();
+        if (selectedCustomer == null) {
+            System.out.println("Este cliente não existe ou não possui nenhum serviço cadastrado.");
+            return;
+        }
+
+        List<ServiceOrder> customerServices = serviceManager.getServicesByCustomer(selectedCustomer);
+        if (customerServices.isEmpty()) {
+            System.out.println("Este cliente não possui nenhum serviço cadastrado.");
+            return;
+        }
+
+        for (int i = 0; i < customerServices.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            printServiceDetails(customerServices.get(i));
+        }
+
+        try {
+            System.out.print("\nDigite o número do serviço que deseja remover: ");
+            int targetIndex = sc.nextInt() - 1;
+            sc.nextLine();
+
+            ServiceOrder orderToRemove = customerServices.get(targetIndex);
+            int idToDelete = orderToRemove.getId();
+
+            serviceManager.removeService(idToDelete);
+
+            System.out.println("Serviço removido com sucesso!");
+        } catch (InputMismatchException e) {
+            System.out.println("Opção de serviço inválida! Digite apenas números!");
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Índice de serviço inválido!");
+        }
+    }
+
+    public void listAllServicesFlow() {
+        List<ServiceOrder> servicesList = serviceManager.getAllServices();
+        if (servicesList.isEmpty()) {
+            System.out.println("Não existe nenhum serviço aqui!");
+            return;
+        }
+
+        displayGroupedServices(servicesList);
+    }
+
     private ServiceOrder inputServiceOrder(Customer selectedCustomer) {
         VehicleOption selectedVehicleOption = getVehicleOption();
         if (selectedVehicleOption == null) {
