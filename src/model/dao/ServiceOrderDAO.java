@@ -1,10 +1,13 @@
 package model.dao;
 
+import model.entities.CarService;
 import model.entities.Customer;
 import model.entities.ServiceOrder;
 import model.exception.DomainException;
+import model.services.NoAdjustment;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,15 +40,19 @@ public class ServiceOrderDAO {
              ResultSet rs = st.executeQuery()) {
 
             while (rs.next()) {
+                int id = rs.getInt("id");
+
                 String model = rs.getString("vehicle_model");
                 double value = rs.getDouble("base_value");
-                java.time.LocalDateTime date = rs.getTimestamp("entry_date").toLocalDateTime();
+                LocalDateTime date = rs.getTimestamp("entry_date").toLocalDateTime();
 
                 int customerId = rs.getInt("customer_id");
                 String customerName = rs.getString("name");
                 Customer customer = new Customer(customerId, customerName);
 
-                ServiceOrder order = new model.entities.CarService(date, model, value, customer, new model.services.NoAdjustment());
+                ServiceOrder order = new CarService(date, model, value, customer, new NoAdjustment());
+
+                order.setId(id);
 
                 list.add(order);
             }
