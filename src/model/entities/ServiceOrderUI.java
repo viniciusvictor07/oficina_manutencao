@@ -142,8 +142,6 @@ public class ServiceOrderUI {
         };
     }
 
-
-
     private void displayGroupedServices(List<ServiceOrder> servicesList) {
         Map<Customer, List<ServiceOrder>> servicesByCustomer = servicesList.stream()
                 .collect(Collectors.groupingBy(ServiceOrder::getCustomer));
