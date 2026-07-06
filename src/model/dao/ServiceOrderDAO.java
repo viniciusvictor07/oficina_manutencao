@@ -62,4 +62,52 @@ public class ServiceOrderDAO {
             throw new RuntimeException("Erro ao listar ordens de serviço: " + e.getMessage());
         }
     }
+
+    public List<ServiceOrder> findByCustomerId(int customerId) {
+        String sql = "SELECT so.*, c.name FROM tb_service_order so INNER JOIN tb_customer c ON so.customer_id = c.id WHERE so.customer_id = ?";
+        List<ServiceOrder> list = new ArrayList<>();
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+
+            st.setInt(1, customerId);
+
+            try (ResultSet rs = st.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("id");
+
+                    String model = rs.getString("vehicle_model");
+                    double value = rs.getDouble("base_value");
+                    LocalDateTime date = rs.getTimestamp("entry_date").toLocalDateTime();
+
+                    String customerName = rs.getString("name");
+                    Customer customer = new Customer(customerId, customerName);
+
+                    ServiceOrder order = new CarService(date, model, value, customer, new NoAdjustment());
+
+                    order.setId(id);
+
+                    list.add(order);
+                }
+            }
+            return list;
+
+        } catch (SQLException e) {
+            throw new DomainException("Erro ao buscar ordens de serviço por cliente: " + e.getMessage());
+        }
+    }
+
+    public void delete(int id) {
+        String sql = "DELETE FROM tb_service_order WHERE id = ?";
+
+        try (Connection conn = DB.getConnection();
+             PreparedStatement st = conn.prepareStatement(sql)) {
+
+            st.setInt(1, id);
+            st.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new DomainException("Erro ao deletar a ordem de serviço: " + e.getMessage());
+        }
+    }
 }
