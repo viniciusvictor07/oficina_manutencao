@@ -31,9 +31,19 @@ public class ServiceManager {
         return true;
     }
 
+    public void removeService(int id) {
+        ServiceOrderDAO dao = new ServiceOrderDAO();
+        dao.delete(id);
+    }
+
     public List<ServiceOrder> getAllServices() {
         ServiceOrderDAO dao = new ServiceOrderDAO();
         return dao.findAll();
+    }
+
+    public List<ServiceOrder> getServicesByCustomer(Customer customer) {
+        ServiceOrderDAO dao = new ServiceOrderDAO();
+        return dao.findByCustomerId(customer.getId());
     }
 
     public double getTotalBaseValue() {
