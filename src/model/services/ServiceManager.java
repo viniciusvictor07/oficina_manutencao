@@ -20,7 +20,7 @@ public class ServiceManager {
         return true;
     }
 
-    public void registerService(ServiceOrder pendingOrder) {
+    public void addService(ServiceOrder pendingOrder) {
         ServiceOrderDAO dao = new ServiceOrderDAO();
         dao.save(pendingOrder);
     }
