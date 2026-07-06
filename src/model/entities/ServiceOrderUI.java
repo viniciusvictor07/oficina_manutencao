@@ -162,7 +162,7 @@ public class ServiceOrderUI {
         );
     }
 
-    public void showTotalProfit() {
+    public void totalProfitFlow() {
         double totalModelsPrice = serviceManager.getTotalBaseValue();
         double totalRepairsPrice = serviceManager.getTotalRepairValue();
         double totalProfit = totalRepairsPrice - totalModelsPrice;

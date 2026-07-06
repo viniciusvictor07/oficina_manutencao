@@ -1,7 +1,6 @@
 package model.entities;
 
 import model.enums.*;
-import model.exception.*;
 import model.services.*;
 
 import java.util.Scanner;
@@ -54,10 +53,10 @@ public class ConsoleUI {
         switch (selectedOption) {
             case REGISTER_CUSTOMER -> customerUI.registerCustomerFlow();
             case REGISTER_SERVICE -> serviceOrderUI.registerServiceFlow();
-            case REMOVE_CUSTOMER -> customerUI.removeCustomerFromList();
-            case REMOVE_SERVICE -> serviceOrderUI.removeServiceFromCustomer();
-            case LIST_SERVICES -> serviceOrderUI.listAllServices();
-            case PROFIT -> serviceOrderUI.showTotalProfit();
+            case REMOVE_CUSTOMER -> customerUI.removeCustomerFlow();
+            case REMOVE_SERVICE -> serviceOrderUI.removeServiceFlow();
+            case LIST_SERVICES -> serviceOrderUI.listAllServicesFlow();
+            case PROFIT -> serviceOrderUI.totalProfitFlow();
             default -> System.out.println("Opção inválida! Tente novamente.");
         }
     }
