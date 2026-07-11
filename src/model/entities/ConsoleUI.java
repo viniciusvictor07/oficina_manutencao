@@ -19,16 +19,12 @@ public class ConsoleUI {
     public void process() {
         while (true) {
             displayMenu();
-            int typedOption = sc.nextInt();
+            MenuOption selectedOption = MenuOption.searchByCode(sc.nextInt());
             sc.nextLine();
 
-            MenuOption selectedOption = MenuOption.searchByCode(typedOption);
             if (selectedOption == null) {
                 System.out.println("Opção inválida! Tente novamente.");
-                continue;
-            }
-
-            if (selectedOption == MenuOption.EXIT) {
+            } else if (selectedOption == MenuOption.EXIT) {
                 System.out.println("Saindo...");
                 break;
             } else {
