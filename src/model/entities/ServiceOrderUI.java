@@ -32,6 +32,7 @@ public class ServiceOrderUI {
         try {
             ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
             serviceManager.addService(pendingService);
+            System.out.println("Serviço registrado com sucesso!");
         } catch (DomainException e) {
             System.out.println("Erro de validação: " + e.getMessage());
         }
@@ -89,9 +90,8 @@ public class ServiceOrderUI {
             System.out.println("Opção inválida! Tente novamente.");
             return null;
         }
-        System.out.println("Qual o modelo do veículo?");
-        String vehicleModel = sc.nextLine();
 
+        String vehicleModel = getVehicleModel();
         double baseValue = getBaseValue();
         TaxManager adjustment = getTaxAdjustment();
         return createServiceOrder(selectedVehicleOption, vehicleModel, baseValue, selectedCustomer, adjustment);
@@ -108,13 +108,18 @@ public class ServiceOrderUI {
         return selectedVehicleOption;
     }
 
+    private String getVehicleModel() {
+        System.out.println("Qual o modelo do veículo?");
+        return sc.nextLine();
+    }
+
     private TaxManager getTaxAdjustment() {
         System.out.println("Qual o ajuste de taxa?");
         System.out.println("1 - Sem Ajuste (Padrão)");
         System.out.println("2 - Desconto Black Friday (10% de desconto)");
         System.out.println("3 - Taxa de Urgência (+ R$ 50)");
-        System.out.println();
         int taxOption = sc.nextInt();
+        sc.nextLine();
 
         TaxOption selectedTax = TaxOption.searchByCode(taxOption);
         return switch (selectedTax) {
