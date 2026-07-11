@@ -51,26 +51,10 @@ public class ServiceOrderUI {
             return;
         }
 
-        for (int i = 0; i < customerServices.size(); i++) {
-            System.out.print((i + 1) + ". ");
-            printServiceDetails(customerServices.get(i));
-        }
-
-        try {
-            System.out.print("\nDigite o número do serviço que deseja remover: ");
-            int targetIndex = sc.nextInt() - 1;
-            sc.nextLine();
-
-            ServiceOrder orderToRemove = customerServices.get(targetIndex);
-            int idToDelete = orderToRemove.getId();
-
-            serviceManager.removeService(idToDelete);
-
+        ServiceOrder selectedOrder = selectServiceOrder(customerServices);
+        if (selectedOrder != null) {
+            serviceManager.removeService(selectedOrder.getId());
             System.out.println("Serviço removido com sucesso!");
-        } catch (InputMismatchException e) {
-            System.out.println("Opção de serviço inválida! Digite apenas números!");
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("Índice de serviço inválido!");
         }
     }
 
@@ -95,6 +79,27 @@ public class ServiceOrderUI {
         double baseValue = getBaseValue();
         TaxManager adjustment = getTaxAdjustment();
         return createServiceOrder(selectedVehicleOption, vehicleModel, baseValue, selectedCustomer, adjustment);
+    }
+
+    private ServiceOrder selectServiceOrder(List<ServiceOrder> customerServices) {
+        for (int i = 0; i < customerServices.size(); i++) {
+            System.out.print((i + 1) + ". ");
+            printServiceDetails(customerServices.get(i));
+        }
+
+        try {
+            System.out.print("\nDigite o número do serviço que deseja remover: ");
+            int index = sc.nextInt() - 1;
+            sc.nextLine();
+            return customerServices.get(index);
+        } catch (InputMismatchException e) {
+            System.out.println("Opção de serviço inválida! Digite apenas números!");
+            sc.nextLine();
+            return null;
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Índice de serviço inválido!");
+            return null;
+        }
     }
 
     private VehicleOption getVehicleOption() {
