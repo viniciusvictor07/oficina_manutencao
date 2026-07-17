@@ -1,8 +1,24 @@
 package model.enums;
 
+import model.entities.CarService;
+import model.entities.Customer;
+import model.entities.MotoService;
+import model.entities.ServiceOrder;
+import model.services.TaxManager;
+
 public enum VehicleOption {
-    CAR(1),
-    MOTORCYCLE(2);
+    CAR(1) {
+        @Override
+        public ServiceOrder createInstance(String model, double value, Customer customer, TaxManager tax) {
+            return new CarService(model, value, customer, tax);
+        }
+    },
+    MOTORCYCLE(2) {
+        @Override
+        public ServiceOrder createInstance(String model, double value, Customer customer, TaxManager tax) {
+            return new MotoService(model, value, customer, tax);
+        }
+    };
 
     private final int code;
 
@@ -22,4 +38,6 @@ public enum VehicleOption {
         }
         return null;
     }
+
+    public abstract ServiceOrder createInstance(String model, double value, Customer customer, TaxManager tax);
 }

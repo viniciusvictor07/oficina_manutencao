@@ -30,8 +30,7 @@ public class ServiceOrderUI {
             return;
         }
         try {
-            ServiceOrder pendingService = inputServiceOrder(selectedCustomer);
-            serviceManager.addService(pendingService);
+            serviceManager.addService(inputServiceOrder(selectedCustomer));
             System.out.println("Serviço registrado com sucesso!");
         } catch (DomainException e) {
             System.out.println("Erro de validação: " + e.getMessage());
@@ -41,7 +40,7 @@ public class ServiceOrderUI {
     public void removeServiceFlow() {
         Customer selectedCustomer = customerUI.selectCustomer();
         if (selectedCustomer == null) {
-            System.out.println("Este cliente não existe ou não possui nenhum serviço cadastrado.");
+            System.out.println("Este cliente não existe.");
             return;
         }
 
@@ -78,7 +77,7 @@ public class ServiceOrderUI {
         String vehicleModel = getVehicleModel();
         double baseValue = getBaseValue();
         TaxManager adjustment = getTaxAdjustment();
-        return createServiceOrder(selectedVehicleOption, vehicleModel, baseValue, selectedCustomer, adjustment);
+        return selectedVehicleOption.createInstance(vehicleModel, baseValue, selectedCustomer, adjustment);
     }
 
     private ServiceOrder selectServiceOrder(List<ServiceOrder> customerServices) {
@@ -92,6 +91,7 @@ public class ServiceOrderUI {
             int index = sc.nextInt() - 1;
             sc.nextLine();
             return customerServices.get(index);
+
         } catch (InputMismatchException e) {
             System.out.println("Opção de serviço inválida! Digite apenas números!");
             sc.nextLine();
@@ -143,13 +143,6 @@ public class ServiceOrderUI {
             throw new DomainException("O valor base deve ser maior que 0.");
         }
         return baseValue;
-    }
-
-    private ServiceOrder createServiceOrder(VehicleOption option, String model, double value, Customer customer, TaxManager tax) {
-        return switch (option) {
-            case CAR -> new CarService(model, value, customer, tax);
-            case MOTORCYCLE -> new MotoService(model, value, customer, tax);
-        };
     }
 
     private void displayGroupedServices(List<ServiceOrder> servicesList) {

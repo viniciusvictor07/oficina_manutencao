@@ -10,13 +10,12 @@ import java.util.List;
 
 public class ServiceManager {
     public boolean addCustomer(Customer pendingCustomer) {
-        CustomerDAO customerDAO = new CustomerDAO();
-
-        if (customerDAO.existsByName(pendingCustomer.getCustomerName())) {
+        CustomerDAO dao = new CustomerDAO();
+        if (dao.existsByName(pendingCustomer.getCustomerName())) {
             throw new DomainException("Já existe um cliente cadastrado com este nome.");
         }
 
-        customerDAO.save(pendingCustomer);
+        dao.save(pendingCustomer);
         return true;
     }
 
@@ -26,8 +25,8 @@ public class ServiceManager {
     }
 
     public boolean removeCustomer(Customer selectedCustomer) {
-        CustomerDAO customerDAO = new CustomerDAO();
-        customerDAO.delete(selectedCustomer);
+        CustomerDAO dao = new CustomerDAO();
+        dao.delete(selectedCustomer);
         return true;
     }
 
