@@ -3,6 +3,7 @@ package model.entities;
 import model.enums.*;
 import model.services.*;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class ConsoleUI {
@@ -19,8 +20,13 @@ public class ConsoleUI {
     public void process() {
         while (true) {
             displayMenu();
-            MenuOption selectedOption = MenuOption.searchByCode(sc.nextInt());
-            sc.nextLine();
+            MenuOption selectedOption = null;
+            try {
+                selectedOption = MenuOption.searchByCode(sc.nextInt());
+                sc.nextLine();
+            } catch (InputMismatchException e) {
+                sc.nextLine();
+            }
 
             if (selectedOption == null) {
                 System.out.println("Opção inválida! Tente novamente.");
