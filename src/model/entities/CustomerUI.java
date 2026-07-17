@@ -41,13 +41,6 @@ public class CustomerUI {
         }
     }
 
-    private Customer inputCustomer() {
-        System.out.println("Qual nome do cliente?");
-        String name = sc.nextLine();
-
-        return new Customer(name);
-    }
-
     public Customer selectCustomer() {
         List<Customer> customersList = serviceManager.getAllCustomers();
 
@@ -70,5 +63,11 @@ public class CustomerUI {
             System.out.println("Índice inválido!");
             return null;
         }
+    }
+
+    private Customer inputCustomer() {
+        System.out.println("Qual nome do cliente?");
+        String name = sc.nextLine();
+        return new Customer(name);
     }
 }
