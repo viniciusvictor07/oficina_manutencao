@@ -1,16 +1,18 @@
 package model.entities;
 
-import model.enums.TaxOption;
-import model.enums.VehicleOption;
+import static model.entities.ConsoleUI.readInt;
 import model.exception.DomainException;
+import model.enums.VehicleOption;
+import model.enums.TaxOption;
 import model.services.*;
 
 import java.time.format.DateTimeFormatter;
 import java.util.InputMismatchException;
+import java.util.stream.Collectors;
+import java.util.Scanner;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+
 
 public class ServiceOrderUI {
     private final DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
@@ -88,8 +90,7 @@ public class ServiceOrderUI {
 
         try {
             System.out.print("\nDigite o número do serviço que deseja remover: ");
-            int index = sc.nextInt() - 1;
-            sc.nextLine();
+            int index = readInt(sc) - 1;
             return customerServices.get(index);
 
         } catch (InputMismatchException e) {
@@ -106,11 +107,7 @@ public class ServiceOrderUI {
         System.out.println("Qual o tipo do veículo?");
         System.out.println("1 - Carro");
         System.out.println("2 - Moto");
-
-        VehicleOption selectedVehicleOption = VehicleOption.searchByCode(sc.nextInt());
-        sc.nextLine();
-
-        return selectedVehicleOption;
+        return VehicleOption.searchByCode(readInt(sc));
     }
 
     private String getVehicleModel() {
@@ -123,8 +120,7 @@ public class ServiceOrderUI {
         System.out.println("1 - Sem Ajuste (Padrão)");
         System.out.println("2 - Desconto Black Friday (10% de desconto)");
         System.out.println("3 - Taxa de Urgência (+ R$ 50)");
-        int taxOption = sc.nextInt();
-        sc.nextLine();
+        int taxOption = readInt(sc);
 
         TaxOption selectedTax = TaxOption.searchByCode(taxOption);
         return switch (selectedTax) {

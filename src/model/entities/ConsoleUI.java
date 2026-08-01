@@ -1,7 +1,7 @@
 package model.entities;
 
-import model.enums.*;
 import model.services.*;
+import model.enums.*;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -22,8 +22,7 @@ public class ConsoleUI {
             displayMenu();
             MenuOption selectedOption = null;
             try {
-                selectedOption = MenuOption.searchByCode(sc.nextInt());
-                sc.nextLine();
+                selectedOption = MenuOption.searchByCode(readInt(sc));
             } catch (InputMismatchException e) {
                 sc.nextLine();
             }
@@ -37,6 +36,12 @@ public class ConsoleUI {
                 handleService(selectedOption);
             }
         }
+    }
+
+    public static int readInt(Scanner sc) {
+        int value = sc.nextInt();
+        sc.nextLine();
+        return value;
     }
 
     public void displayMenu() {

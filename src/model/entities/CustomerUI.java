@@ -1,10 +1,11 @@
 package model.entities;
 
+import static model.entities.ConsoleUI.readInt;
 import model.exception.DomainException;
 import model.services.ServiceManager;
-
 import java.util.List;
 import java.util.Scanner;
+
 
 public class CustomerUI {
     ServiceManager serviceManager;
@@ -54,8 +55,7 @@ public class CustomerUI {
         customersList.forEach(c -> System.out.printf("%d. %s%n", i[0]++, c.getCustomerName()));
 
         System.out.print("Digite o número do cliente: ");
-        int index = sc.nextInt() - 1;
-        sc.nextLine();
+        int index = readInt(sc) - 1;
 
         if (index >= 0 && index < customersList.size()) {
             return customersList.get(index);
