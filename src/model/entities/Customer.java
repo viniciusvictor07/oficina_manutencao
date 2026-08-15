@@ -1,19 +1,19 @@
 package model.entities;
 
 public class Customer {
-    private int id;
+    private Integer id;
     private final String customerName;
 
     public Customer(String customerName) {
         this.customerName = customerName;
     }
 
-    public Customer(int id, String customerName) {
+    public Customer(Integer id, String customerName) {
         this.id = id;
         this.customerName = customerName;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
