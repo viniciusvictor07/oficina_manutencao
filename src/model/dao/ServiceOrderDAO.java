@@ -3,7 +3,6 @@ package model.dao;
 import jakarta.persistence.EntityManager;
 import model.entities.ServiceOrder;
 import model.exception.DomainException;
-
 import java.sql.*;
 import java.util.List;
 

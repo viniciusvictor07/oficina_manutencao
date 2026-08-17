@@ -1,5 +1,6 @@
 package model.services;
 
+import jakarta.persistence.EntityManager;
 import model.dao.CustomerDAO;
 import model.dao.ServiceOrderDAO;
 import model.entities.Customer;
@@ -9,40 +10,40 @@ import model.exception.DomainException;
 import java.util.List;
 
 public class ServiceManager {
+    private final CustomerDAO customerDAO;
+    private final ServiceOrderDAO serviceOrderDAO;
+
+    public ServiceManager(EntityManager em) {
+        this.customerDAO = new CustomerDAO(em);
+        this.serviceOrderDAO = new ServiceOrderDAO(em);
+    }
     public boolean addCustomer(Customer pendingCustomer) {
-        CustomerDAO dao = new CustomerDAO();
-        if (dao.existsByName(pendingCustomer.getCustomerName())) {
+        if (customerDAO.existsByName(pendingCustomer.getCustomerName())) {
             throw new DomainException("Já existe um cliente cadastrado com este nome.");
         }
-
-        dao.save(pendingCustomer);
+        customerDAO.save(pendingCustomer);
         return true;
     }
 
     public void addService(ServiceOrder pendingOrder) {
-        ServiceOrderDAO dao = new ServiceOrderDAO();
-        dao.save(pendingOrder);
+        serviceOrderDAO.save(pendingOrder);
     }
 
     public boolean removeCustomer(Customer selectedCustomer) {
-        CustomerDAO dao = new CustomerDAO();
-        dao.delete(selectedCustomer);
+        customerDAO.delete(selectedCustomer);
         return true;
     }
 
     public void removeService(int id) {
-        ServiceOrderDAO dao = new ServiceOrderDAO();
-        dao.delete(id);
+        serviceOrderDAO.delete(id);
     }
 
     public List<ServiceOrder> getAllServices() {
-        ServiceOrderDAO dao = new ServiceOrderDAO();
-        return dao.findAll();
+        return serviceOrderDAO.findAll();
     }
 
     public List<ServiceOrder> getServicesByCustomer(Customer customer) {
-        ServiceOrderDAO dao = new ServiceOrderDAO();
-        return dao.findByCustomerId(customer.getId());
+        return serviceOrderDAO.findByCustomerId(customer.getId());
     }
 
     public double getTotalBaseValue() {
@@ -58,6 +59,6 @@ public class ServiceManager {
     }
 
     public List<Customer> getAllCustomers() {
-        return new CustomerDAO().findAll();
+        return customerDAO.findAll();
     }
 }
