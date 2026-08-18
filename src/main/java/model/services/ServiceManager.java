@@ -1,11 +1,10 @@
 package model.services;
 
 import jakarta.persistence.EntityManager;
-import model.dao.CustomerDAO;
-import model.dao.ServiceOrderDAO;
-import model.entities.Customer;
-import model.entities.ServiceOrder;
 import model.exception.DomainException;
+import model.entities.ServiceOrder;
+import model.entities.Customer;
+import model.dao.*;
 
 import java.util.List;
 
@@ -17,6 +16,7 @@ public class ServiceManager {
         this.customerDAO = new CustomerDAO(em);
         this.serviceOrderDAO = new ServiceOrderDAO(em);
     }
+
     public boolean addCustomer(Customer pendingCustomer) {
         if (customerDAO.existsByName(pendingCustomer.getCustomerName())) {
             throw new DomainException("Já existe um cliente cadastrado com este nome.");

@@ -1,23 +1,25 @@
 package model.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import model.services.TaxManager;
-import java.time.LocalDateTime;
 
 @Entity
+@DiscriminatorValue("CAR")
 public class CarService extends ServiceOrder {
+    public CarService() {
+        super();
+    }
 
     public CarService(String vehicleModel, double baseValue, Customer customer, TaxManager adjusment) {
         super(vehicleModel, baseValue, customer, adjusment);
     }
 
-    public CarService(LocalDateTime entryDate, String vehicleModel, double baseValue, Customer customer, TaxManager adjusment) {
-        super(entryDate, vehicleModel, baseValue, customer, adjusment);
-    }
-
     @Override
     public Double getFinalRepairPrice() {
         double repairPrice = getBaseValue() * 1.3;
-        return getAdjustment().applyAdjustment(repairPrice);
+        if (getAdjustment() != null) {
+            return getAdjustment().applyAdjustment(repairPrice);
+        }
+        return repairPrice;
     }
 }
