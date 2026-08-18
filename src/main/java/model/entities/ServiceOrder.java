@@ -1,16 +1,28 @@
 package model.entities;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
 import model.services.TaxManager;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class ServiceOrder {
-    private final LocalDateTime entryDate;
-    private final String vehicleModel;
-    private final Customer customer;
-    private final double baseValue;
-    private final TaxManager adjusment;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private LocalDateTime entryDate;
+    private String vehicleModel;
+    private Customer customer;
+    private double baseValue;
+    private TaxManager adjusment;
     private int id;
+
+    protected ServiceOrder() {}
 
     public ServiceOrder(String vehicleModel, double baseValue, Customer customer, TaxManager adjusment) {
         this.entryDate = LocalDateTime.now();
