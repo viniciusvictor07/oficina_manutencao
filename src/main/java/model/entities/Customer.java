@@ -15,6 +15,7 @@ public class Customer {
     @Column(name = "name")
     private String customerName;
 
+    @SuppressWarnings("unused")
     public Customer() {
     }
 
@@ -22,15 +23,11 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public Customer(Integer id, String customerName) {
-        this.id = id;
-        this.customerName = customerName;
-    }
-
     public Integer getId() {
         return id;
     }
 
+    @SuppressWarnings("unused")
     public void setId(Integer id) {
         this.id = id;
     }
@@ -39,6 +36,7 @@ public class Customer {
         return customerName;
     }
 
+    @SuppressWarnings("unused")
     public void setCustomerName(String customerName) {
         this.customerName = customerName;
     }

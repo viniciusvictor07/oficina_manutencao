@@ -41,14 +41,6 @@ public abstract class ServiceOrder {
         this.adjustment = adjustment;
     }
 
-    public ServiceOrder(LocalDateTime entryDate, String vehicleModel, double baseValue, Customer customer, TaxManager adjustment) {
-        this.entryDate = entryDate;
-        this.vehicleModel = vehicleModel;
-        this.baseValue = baseValue;
-        this.customer = customer;
-        this.adjustment = adjustment;
-    }
-
     public abstract Double getFinalRepairPrice();
 
     public LocalDateTime getEntryDate() {
@@ -75,6 +67,7 @@ public abstract class ServiceOrder {
         return id;
     }
 
+    @SuppressWarnings("unused")
     public void setId(int id) {
         this.id = id;
     }

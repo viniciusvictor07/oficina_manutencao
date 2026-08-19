@@ -6,6 +6,7 @@ import model.services.TaxManager;
 @Entity
 @DiscriminatorValue("CAR")
 public class CarService extends ServiceOrder {
+    @SuppressWarnings("unused")
     public CarService() {
         super();
     }
