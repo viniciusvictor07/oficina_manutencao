@@ -62,3 +62,4 @@ public class ServiceManager {
         return customerDAO.findAll();
     }
 }
+
